@@ -112,4 +112,4 @@ def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM):
             listOfCovInput.append(el[1])
     
     listOfCovInput    =   list(set(listOfCovInput))
-    print(len(listOfCovInput))
+    print(len(listOfCovInput),len(listOfInputs))
