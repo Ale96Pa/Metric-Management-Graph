@@ -1,0 +1,39 @@
+S001,https://github.com/firehol/blocklist-ipsets
+S002,http://iplists.firehol.org/
+S003,https://www.tenable.com/products/nessus
+S004,https://github.com/maravento/blackweb
+S005,https://www.crowdsec.net
+S006,https://www.snort.org/
+S007,https://docs.microsoft.com/en-us/troubleshoot/windows-client/performance/determine-hardware-dep-available
+S008,https://suricata.io/features/open-source/
+S010,https://github.com/paralax/awesome-honeypots
+S011,https://siemonster.com/
+S012,https://www.ossec.net/
+S013,penetration test report COMPANY
+S014,https://www.zerodayinitiative.com/advisories/published/
+S016,paper solution
+S017,make ASWatch with AS configuration from paper
+S018,spreadsheet with overall cyber-security costs
+S019,spreadsheet with investment estimation
+S020,https://github.com/danielmiessler/SecLists
+S021,patch mangment software: https://www.pdq.com/pricing/
+S022,spreadsheet with vulnerabilities cvss
+S023,paper tool implementation
+S024,https://github.com/maravento/blackip
+S025,https://www.projecthoneypot.org/list_of_ips.php
+S026,https://aws.amazon.com/it/guardduty/
+S027,https://docs.microsoft.com/it-it/azure/firewall/premium-features
+S028,https://www.geeksforgeeks.org/draw-control-flow-graph-using-pycfg-python/
+S029,https://www.ibm.com/it-it/qradar/security-qradar-siem
+S030,https://logrhythm.com/
+S031,https://www.splunk.com/en_us/data-insider/what-is-siem.html
+S032,spreadsheet with utilization monitoring CPU RAM etc
+S033,spreadsheet with result of benchmark IDS/IPS tools
+S034,https://www.manageengine.com/products/firewall/firewall-rule-management.html
+S035,https://www.nirsoft.net/utils/network_route_view.html
+S036,https://www.envoyproxy.io/docs/envoy/latest/operations/tools/route_table_check_tool
+S037,https://www.solarwinds.com/network-topology-mapper
+S038,https://nmap.org/
+S039,https://www.sonarqube.org/
+S040,https://www.microfocus.com/it-it/products/static-code-analysis-sast/overview
+S041,https://www.hcltechsw.com/it/products/appscan/
