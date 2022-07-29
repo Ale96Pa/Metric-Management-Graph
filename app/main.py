@@ -7,6 +7,7 @@ from lib.fromCsvToGraph import genPosNodes
 from lib.fromCsvToGraph import drawGraph
 
 from lib.minSetCover import exeMinSetCoverV1
+from lib.minSetCover import exeMinSetCoverV2
 
 
 config = configparser.ConfigParser()
@@ -21,7 +22,7 @@ sheetNames			=	config['DB']['sheetsName'].split(',')
 outputPathDbFiles	=	config['DB']['pathDbFiles']
 
 
-convertXlsToCSV(sheetNames,xlsDbPathFile,outputPathDbFiles)
+#convertXlsToCSV(sheetNames,xlsDbPathFile,outputPathDbFiles)
 
 ########################################################################################
 #STEP 2 convert CSV files in XML file for networkx lib
@@ -31,15 +32,15 @@ fileEdges		=	[pathDbFiles+a for a in config['GRAPH']['edgeNames'].split(',')]
 fileGraphName	=	config['GRAPH']['xmlGraphName']
 
 
-genXmlGraph(fileNodes, fileEdges, fileGraphName)
+#genXmlGraph(fileNodes, fileEdges, fileGraphName)
 
 ########################################################################################
 #STEP 3 make position node file to see a good graph
 delta			=	[int(x) for x in config['GRAPH']['delta'].split(',')]
-pos			=	[int(x) for x in config['GRAPH']['pos'].split(',')]
-filePosName	=	config['GRAPH']['filePosName']
+pos			    =	[int(x) for x in config['GRAPH']['pos'].split(',')]
+filePosName	    =	config['GRAPH']['filePosName']
 
-genPosNodes(fileNodes, delta, pos, filePosName)
+#genPosNodes(fileNodes, delta, pos, filePosName)
 
 ########################################################################################
 #STEP 4 draw the graph
@@ -49,17 +50,22 @@ outputFigGraph	=	outputPath+'MGM.pdf'
 
 MGM = nx.read_graphml(fileGraphName)
 
-drawGraph(MGM, outputFigGraph)
+#drawGraph(MGM, outputFigGraph)
 
 
 ########################################################################################
 #STEP 5 - test MinSetCov v1
 
-outputFile	=	outputPath+'MinSetCov_v1.pdf'
+outputFile		=	outputPath+'MinSetCov_v1.pdf'
 
-exeMinSetCoverV1(fileNodes, MGM, outputFile)
+listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile)
 
 
+
+########################################################################################
+#STEP 6 - test MinSetCov v2
+
+exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM)
 
 ########################################################################################
 print('ok')

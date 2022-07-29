@@ -41,7 +41,7 @@ def greedyMinSetCover(X,S):
 		
 	return I
 
-def exeMinSetCoverV1(fileNodes,MGM,outputFileName):
+def exeMinSetCoverV1(fileNodes,MGM,outputFileName,draw=False):
     listOfMetrics = []
     listOfClusters = []
     listOfInputs = []
@@ -83,5 +83,33 @@ def exeMinSetCoverV1(fileNodes,MGM,outputFileName):
     print('Col {}% di cluster riesco a coprire il 100% di metriche che hanno almeno un arco uscente '.format(str(eff)))
     
     covGraph_v1 = MGM.subgraph(listOfMetrics+listOfCovCluster)
+    if draw:
+        drawGraph(covGraph_v1, outputFileName)
 
-    drawGraph(covGraph_v1, outputFileName)
+    return listOfCovCluster
+
+def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM):
+    listOfMetrics = []
+    listOfClusters = []
+    listOfInputs = []
+
+    for file in fileNodes:
+        with open(file, 'r') as db:
+            csvreader = csv.reader(db)
+            for row in csvreader:
+                if 'METRICS.csv' in file:
+                    listOfMetrics.append(row[0])
+                elif 'CLUSTERS.csv' in file:
+                    listOfClusters.append(row[0])
+                else:
+                    listOfInputs.append(row[0])
+    
+    subMGM = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfInputs)
+
+    listOfCovInput = []
+    for covCluster in listOfCovCluster:
+        for el in subMGM.out_edges(covCluster):
+            listOfCovInput.append(el[1])
+    
+    listOfCovInput    =   list(set(listOfCovInput))
+    print(len(listOfCovInput))
