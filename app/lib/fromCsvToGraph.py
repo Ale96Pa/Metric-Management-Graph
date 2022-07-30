@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import scipy as sp
 
-from lib import position 
+from lib.position import pos 
 
 
 
@@ -19,6 +19,7 @@ def genXmlGraph(fileNodes,fileEdges,fileGraphName):
 	f.write('\t\txmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n')
 	f.write('\t\txsi:schemaLocation="http://graphml.graphdrawing.org/xmlns\n')
 	f.write('\t\thttp://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">\n')
+	f.write('\t<key id="d1" for="edge" attr.name="weight" attr.type="int"/>\n')
 	f.write('\t<graph id="G" edgedefault="directed">\n')
 
 	print('Start - from CSV to xml NODES')
@@ -52,6 +53,9 @@ def genXmlGraph(fileNodes,fileEdges,fileGraphName):
 					edge = '\t\t<edge source="{}" target="{}"/>\n'.format(row[1],row[0])
 				else:
 					edge = '\t\t<edge source="{}" target="{}"/>\n'.format(row[0],row[1])
+					if 'LINK_IN_SRC.csv' in file:
+						edge = '\t\t<edge source="{}" target="{}"><data key="d1">{}</data></edge>\n'.format(row[0],row[1],row[2])
+
 				
 				f.write(edge)
 
@@ -108,10 +112,13 @@ def drawGraph(graph,outputFileName,saveFig=True,fontSize=5,nodeSize=400):
 		"node_color": "white",
 		"edgecolors": "black",
 		"linewidths": 1,
-		"width": 1,
+		"width": 1
 	}
-	nx.draw_networkx(graph, position.pos, **options)
-
+	
+	nx.draw_networkx(graph, pos, **options)
+	
+	labels = nx.get_edge_attributes(graph,'weight')
+	nx.draw_networkx_edge_labels(graph,pos,edge_labels=labels)
 
 	# Set margins for the axes so that nodes aren't clipped
 	ax = plt.gca()

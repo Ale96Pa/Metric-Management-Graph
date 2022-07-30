@@ -3,6 +3,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
 		http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+	<key id="d1" for="edge" attr.name="weight" attr.type="int"/>
 	<graph id="G" edgedefault="directed">
 		<node id="M001"/>
 		<node id="M002"/>
@@ -304,56 +305,56 @@
 		<edge source="CL031" target="I002"/>
 		<edge source="CL031" target="I037"/>
 		<edge source="CL031" target="I038"/>
-		<edge source="I001" target="S001"/>
-		<edge source="I001" target="S024"/>
-		<edge source="I001" target="S002"/>
-		<edge source="I002" target="S003"/>
-		<edge source="I003" target="S004"/>
-		<edge source="I004" target="S002"/>
-		<edge source="I005" target="S005"/>
-		<edge source="I005" target="S006"/>
-		<edge source="I005" target="S026"/>
-		<edge source="I005" target="S008"/>
-		<edge source="I005" target="S027"/>
-		<edge source="I006" target="S007"/>
-		<edge source="I007" target="S028"/>
-		<edge source="I008" target="S006"/>
-		<edge source="I008" target="S026"/>
-		<edge source="I008" target="S008"/>
-		<edge source="I008" target="S027"/>
-		<edge source="I009" target="S010"/>
-		<edge source="I010" target="S011"/>
-		<edge source="I010" target="S029"/>
-		<edge source="I010" target="S030"/>
-		<edge source="I010" target="S031"/>
-		<edge source="I011" target="S032"/>
-		<edge source="I012" target="S012"/>
-		<edge source="I013" target="S013"/>
-		<edge source="I015" target="S014"/>
-		<edge source="I016" target="S003"/>
-		<edge source="I017" target="S014"/>
-		<edge source="I019" target="S025"/>
-		<edge source="I021" target="S001"/>
-		<edge source="I021" target="S004"/>
-		<edge source="I022" target="S001"/>
-		<edge source="I022" target="S004"/>
-		<edge source="I023" target="S004"/>
-		<edge source="I024" target="S016"/>
-		<edge source="I025" target="S017"/>
-		<edge source="I026" target="S018"/>
-		<edge source="I027" target="S019"/>
-		<edge source="I030" target="S020"/>
-		<edge source="I032" target="S021"/>
-		<edge source="I033" target="S022"/>
-		<edge source="I034" target="S023"/>
-		<edge source="I035" target="S033"/>
-		<edge source="I036" target="S034"/>
-		<edge source="I037" target="S035"/>
-		<edge source="I037" target="S036"/>
-		<edge source="I038" target="S037"/>
-		<edge source="I038" target="S038"/>
-		<edge source="I031" target="S039"/>
-		<edge source="I031" target="S040"/>
-		<edge source="I031" target="S041"/>
+		<edge source="I001" target="S001"><data key="d1">2</data></edge>
+		<edge source="I001" target="S024"><data key="d1">2</data></edge>
+		<edge source="I001" target="S002"><data key="d1">2</data></edge>
+		<edge source="I002" target="S003"><data key="d1">1</data></edge>
+		<edge source="I003" target="S004"><data key="d1">1</data></edge>
+		<edge source="I004" target="S002"><data key="d1">2</data></edge>
+		<edge source="I005" target="S005"><data key="d1">4</data></edge>
+		<edge source="I005" target="S006"><data key="d1">2</data></edge>
+		<edge source="I005" target="S026"><data key="d1">5</data></edge>
+		<edge source="I005" target="S008"><data key="d1">2</data></edge>
+		<edge source="I005" target="S027"><data key="d1">5</data></edge>
+		<edge source="I006" target="S007"><data key="d1">5</data></edge>
+		<edge source="I007" target="S028"><data key="d1">4</data></edge>
+		<edge source="I008" target="S006"><data key="d1">2</data></edge>
+		<edge source="I008" target="S026"><data key="d1">5</data></edge>
+		<edge source="I008" target="S008"><data key="d1">2</data></edge>
+		<edge source="I008" target="S027"><data key="d1">5</data></edge>
+		<edge source="I009" target="S010"><data key="d1">3</data></edge>
+		<edge source="I010" target="S011"><data key="d1">5</data></edge>
+		<edge source="I010" target="S029"><data key="d1">5</data></edge>
+		<edge source="I010" target="S030"><data key="d1">5</data></edge>
+		<edge source="I010" target="S031"><data key="d1">4</data></edge>
+		<edge source="I011" target="S032"><data key="d1">5</data></edge>
+		<edge source="I012" target="S012"><data key="d1">2</data></edge>
+		<edge source="I013" target="S013"><data key="d1">5</data></edge>
+		<edge source="I015" target="S014"><data key="d1">2</data></edge>
+		<edge source="I016" target="S003"><data key="d1">1</data></edge>
+		<edge source="I017" target="S014"><data key="d1">2</data></edge>
+		<edge source="I019" target="S025"><data key="d1">1</data></edge>
+		<edge source="I021" target="S001"><data key="d1">2</data></edge>
+		<edge source="I021" target="S004"><data key="d1">1</data></edge>
+		<edge source="I022" target="S001"><data key="d1">2</data></edge>
+		<edge source="I022" target="S004"><data key="d1">1</data></edge>
+		<edge source="I023" target="S004"><data key="d1">1</data></edge>
+		<edge source="I024" target="S016"><data key="d1">5</data></edge>
+		<edge source="I025" target="S017"><data key="d1">3</data></edge>
+		<edge source="I026" target="S018"><data key="d1">4</data></edge>
+		<edge source="I027" target="S019"><data key="d1">5</data></edge>
+		<edge source="I030" target="S020"><data key="d1">2</data></edge>
+		<edge source="I032" target="S021"><data key="d1">5</data></edge>
+		<edge source="I033" target="S022"><data key="d1">2</data></edge>
+		<edge source="I034" target="S023"><data key="d1">5</data></edge>
+		<edge source="I035" target="S033"><data key="d1">5</data></edge>
+		<edge source="I036" target="S034"><data key="d1">4</data></edge>
+		<edge source="I037" target="S035"><data key="d1">2</data></edge>
+		<edge source="I037" target="S036"><data key="d1">1</data></edge>
+		<edge source="I038" target="S037"><data key="d1">5</data></edge>
+		<edge source="I038" target="S038"><data key="d1">2</data></edge>
+		<edge source="I031" target="S039"><data key="d1">4</data></edge>
+		<edge source="I031" target="S040"><data key="d1">5</data></edge>
+		<edge source="I031" target="S041"><data key="d1">4</data></edge>
 	</graph>
 	</graphml>

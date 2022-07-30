@@ -46,11 +46,11 @@ filePosName	    =	config['GRAPH']['filePosName']
 #STEP 4 draw the graph
 
 outputPath		=	config['GRAPH']['outputPath']
-outputFigGraph	=	outputPath+'MGM.pdf'
+outputFigGraph	=	outputPath+'MGM_w.pdf'
 
 MGM = nx.read_graphml(fileGraphName)
 
-#drawGraph(MGM, outputFigGraph)
+drawGraph(MGM, outputFigGraph)
 
 
 ########################################################################################
@@ -58,7 +58,7 @@ MGM = nx.read_graphml(fileGraphName)
 
 outputFile		=	outputPath+'MinSetCov_v1.pdf'
 
-listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile)
+#listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile)
 
 
 
@@ -67,7 +67,7 @@ listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile)
 
 outputFile_v2		=	outputPath+'MinSetCov_v2.pdf'
 
-exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM,outputFile_v2,True)
+#exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM,outputFile_v2,True)
 
 ########################################################################################
 print('ok')
