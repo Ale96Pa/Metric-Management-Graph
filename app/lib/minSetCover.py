@@ -6,8 +6,8 @@ from lib.fromCsvToGraph import drawGraph
 def makeXForAlgo(listoOfNodes,Graph):
 	X = []
 	for node in listoOfNodes:
-        #uso > 0 di zero perché devo prendermi solo le metriche 
-        # da cui parte almeno 1 arco
+		#uso > 0 di zero perché devo prendermi solo le metriche 
+		# da cui parte almeno 1 arco
 		if len(Graph.out_edges(node)) > 0:
 			X.append(node)
 
@@ -42,74 +42,80 @@ def greedyMinSetCover(X,S):
 	return I
 
 def exeMinSetCoverV1(fileNodes,MGM,outputFileName,draw=False):
-    listOfMetrics = []
-    listOfClusters = []
-    listOfInputs = []
+	listOfMetrics = []
+	listOfClusters = []
+	listOfInputs = []
 
-    for file in fileNodes:
-        with open(file, 'r') as db:
-            csvreader = csv.reader(db)
-            for row in csvreader:
-                if 'METRICS.csv' in file:
-                    listOfMetrics.append(row[0])
-                elif 'CLUSTERS.csv' in file:
-                    listOfClusters.append(row[0])
-                else:
-                    listOfInputs.append(row[0])
-    
-    subMGM = MGM.subgraph(listOfMetrics+listOfClusters)
+	for file in fileNodes:
+		with open(file, 'r') as db:
+			csvreader = csv.reader(db)
+			for row in csvreader:
+				if 'METRICS.csv' in file:
+					listOfMetrics.append(row[0])
+				elif 'CLUSTERS.csv' in file:
+					listOfClusters.append(row[0])
+				else:
+					listOfInputs.append(row[0])
+	
+	subMGM = MGM.subgraph(listOfMetrics+listOfClusters)
    
-    listOfClusters = list(set(listOfClusters))
+	listOfClusters = list(set(listOfClusters))
    
-    setMetrics	= set(listOfMetrics)
-    setClusters	= set(listOfClusters)
-    setInputs	= set(listOfInputs)
-    
-    #SICCOME POSSO AVERE METRICHE CHE NON SONO COLLEGATE A NULLA
-    #PRENDO SOLO LE METRICHE CON UN ARCO USCENTE
-    #PERCIò creo X e S
+	setMetrics	= set(listOfMetrics)
+	setClusters	= set(listOfClusters)
+	setInputs	= set(listOfInputs)
+	
+	#SICCOME POSSO AVERE METRICHE CHE NON SONO COLLEGATE A NULLA
+	#PRENDO SOLO LE METRICHE CON UN ARCO USCENTE
+	#PERCIò creo X e S
 
-    S = makeSForAlgo(listOfClusters,subMGM)
-    X = makeXForAlgo(listOfMetrics,subMGM)
-    
-    I = greedyMinSetCover(X, S)
+	S = makeSForAlgo(listOfClusters,subMGM)
+	X = makeXForAlgo(listOfMetrics,subMGM)
+	
+	I = greedyMinSetCover(X, S)
 
-    listOfCovCluster = [listOfClusters[el] for el in I]
+	listOfCovCluster = [listOfClusters[el] for el in I]
 
-    print(len(listOfClusters),len(listOfCovCluster))
+	print(len(listOfClusters),len(listOfCovCluster))
 
-    eff = (len(listOfCovCluster)/len(listOfClusters))*100
+	eff = (len(listOfCovCluster)/len(listOfClusters))*100
 
-    print('Col {}% di cluster riesco a coprire il 100% di metriche che hanno almeno un arco uscente '.format(str(eff)))
-    
-    covGraph_v1 = MGM.subgraph(listOfMetrics+listOfCovCluster)
-    if draw:
-        drawGraph(covGraph_v1, outputFileName)
+	print('Col {}% di cluster riesco a coprire il 100% di metriche che hanno almeno un arco uscente '.format(str(eff)))
+	
+	covGraph_v1 = MGM.subgraph(listOfMetrics+listOfCovCluster)
+	if draw:
+		drawGraph(covGraph_v1, outputFileName)
 
-    return listOfCovCluster
+	return listOfCovCluster
 
-def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM):
-    listOfMetrics = []
-    listOfClusters = []
-    listOfInputs = []
+def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM,outputFileName,draw=False):
+	listOfMetrics = []
+	listOfClusters = []
+	listOfInputs = []
 
-    for file in fileNodes:
-        with open(file, 'r') as db:
-            csvreader = csv.reader(db)
-            for row in csvreader:
-                if 'METRICS.csv' in file:
-                    listOfMetrics.append(row[0])
-                elif 'CLUSTERS.csv' in file:
-                    listOfClusters.append(row[0])
-                else:
-                    listOfInputs.append(row[0])
-    
-    subMGM = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfInputs)
+	for file in fileNodes:
+		with open(file, 'r') as db:
+			csvreader = csv.reader(db)
+			for row in csvreader:
+				if 'METRICS.csv' in file:
+					listOfMetrics.append(row[0])
+				elif 'CLUSTERS.csv' in file:
+					listOfClusters.append(row[0])
+				else:
+					listOfInputs.append(row[0])
+	
+	subMGM = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfInputs)
+	listOfInputs	=	list(set(listOfInputs))
+	
+	listOfCovInput = []
+	for covCluster in listOfCovCluster:
+		for el in subMGM.out_edges(covCluster):
+			listOfCovInput.append(el[1])
+	
+	listOfCovInput    =   list(set(listOfCovInput))
 
-    listOfCovInput = []
-    for covCluster in listOfCovCluster:
-        for el in subMGM.out_edges(covCluster):
-            listOfCovInput.append(el[1])
-    
-    listOfCovInput    =   list(set(listOfCovInput))
-    print(len(listOfCovInput),len(listOfInputs))
+	covGraph_v2 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput)
+	if draw:
+		drawGraph(covGraph_v2, outputFileName)
+
+	print(len(listOfCovInput),len(listOfInputs))

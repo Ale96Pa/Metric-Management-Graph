@@ -65,7 +65,9 @@ listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile)
 ########################################################################################
 #STEP 6 - test MinSetCov v2
 
-exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM)
+outputFile_v2		=	outputPath+'MinSetCov_v2.pdf'
+
+exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM,outputFile_v2,True)
 
 ########################################################################################
 print('ok')
