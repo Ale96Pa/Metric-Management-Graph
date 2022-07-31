@@ -1,6 +1,6 @@
 import networkx as nx
 import csv
-from lib.fromCsvToGraph import drawGraph 
+from lib.draw import drawGraph 
 
 #create X from edge to respect the paper S is a subSet of X
 def makeXForAlgo(listoOfNodes,Graph):

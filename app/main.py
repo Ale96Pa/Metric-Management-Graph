@@ -2,9 +2,14 @@ import configparser
 import networkx as nx
 
 from lib.convertXlsToCSV import convertXlsToCSV
-from lib.fromCsvToGraph import genXmlGraph
-from lib.fromCsvToGraph import genPosNodes
-from lib.fromCsvToGraph import drawGraph
+from lib.parser import getGraphFromCSV
+
+from lib.tools import genPosNodes
+from lib.position import pos
+
+from lib.draw import drawGraph
+
+
 
 from lib.minSetCover import exeMinSetCoverV1
 from lib.minSetCover import exeMinSetCoverV2
@@ -17,40 +22,40 @@ config.read('config.ini')
 #STEP 1 convert XLS DB TO CSV
 
 pathDbFiles			=	config['DB']['pathDbFiles']
-xlsDbPathFile		=	config['DB']['pathDbFiles']+config['DB']['xlsFileName']
+xlsDbPathFile		=	pathDbFiles+config['DB']['xlsFileName']
 sheetNames			=	config['DB']['sheetsName'].split(',')
-outputPathDbFiles	=	config['DB']['pathDbFiles']
+outputPathDbFiles	=	pathDbFiles
 
 
 #convertXlsToCSV(sheetNames,xlsDbPathFile,outputPathDbFiles)
 
 ########################################################################################
-#STEP 2 convert CSV files in XML file for networkx lib
+#STEP 2 convert CSV files in GRAPH Obj for networkx
 
 fileNodes		=	[pathDbFiles+a for a in config['GRAPH']['nodeNames'].split(',')]
 fileEdges		=	[pathDbFiles+a for a in config['GRAPH']['edgeNames'].split(',')]
-fileGraphName	=	config['GRAPH']['xmlGraphName']
+fileGraphName	=	config['GRAPH']['graphMLName']
 
 
-#genXmlGraph(fileNodes, fileEdges, fileGraphName)
+MGM	=	getGraphFromCSV(fileNodes, fileEdges, fileGraphName)
+
 
 ########################################################################################
 #STEP 3 make position node file to see a good graph
+
 delta			=	[int(x) for x in config['GRAPH']['delta'].split(',')]
-pos			    =	[int(x) for x in config['GRAPH']['pos'].split(',')]
+position			    =	[int(x) for x in config['GRAPH']['position'].split(',')]
 filePosName	    =	config['GRAPH']['filePosName']
 
-#genPosNodes(fileNodes, delta, pos, filePosName)
+#genPosNodes(MGM, delta, position, filePosName)
 
 ########################################################################################
 #STEP 4 draw the graph
 
 outputPath		=	config['GRAPH']['outputPath']
-outputFigGraph	=	outputPath+'MGM_w.pdf'
+outputFigGraph	=	outputPath+'MGM_COLORED.pdf'
 
-MGM = nx.read_graphml(fileGraphName)
-
-drawGraph(MGM, outputFigGraph)
+drawGraph(MGM, outputFigGraph, pos)
 
 
 ########################################################################################
