@@ -42,30 +42,21 @@ def greedyMinSetCover(X,S):
 		
 	return I
 
-def exeMinSetCoverV1(fileNodes,MGM,outputFileName,draw=False):
+def exeMinSetCoverV1(MGM,outputFileName,draw=False):
 	listOfMetrics = []
 	listOfClusters = []
 	listOfInputs = []
 
-	for file in fileNodes:
-		with open(file, 'r') as db:
-			csvreader = csv.reader(db)
-			for row in csvreader:
-				if 'METRICS.csv' in file:
-					listOfMetrics.append(row[0])
-				elif 'CLUSTERS.csv' in file:
-					listOfClusters.append(row[0])
-				else:
-					listOfInputs.append(row[0])
+	for node in MGM.nodes():
+		if 'M' in node:
+			listOfMetrics.append(node)
+		elif 'CL' in node:
+			listOfClusters.append(node)
+		elif 'I' in node:
+			listOfInputs.append(node)
 	
 	subMGM = MGM.subgraph(listOfMetrics+listOfClusters)
    
-	listOfClusters = list(set(listOfClusters))
-   
-	setMetrics	= set(listOfMetrics)
-	setClusters	= set(listOfClusters)
-	setInputs	= set(listOfInputs)
-	
 	#SICCOME POSSO AVERE METRICHE CHE NON SONO COLLEGATE A NULLA
 	#PRENDO SOLO LE METRICHE CON UN ARCO USCENTE
 	#PERCIò creo X e S
@@ -76,12 +67,12 @@ def exeMinSetCoverV1(fileNodes,MGM,outputFileName,draw=False):
 	I = greedyMinSetCover(X, S)
 
 	listOfCovCluster = [listOfClusters[el] for el in I]
-
-	print(len(listOfClusters),len(listOfCovCluster))
+	
+	print('CLSTERS COV: {}'.format(len(listOfClusters)), '/ ALL CLASTERS: {}'.format(len(listOfCovCluster)))
 
 	eff = (len(listOfCovCluster)/len(listOfClusters))*100
 
-	print('Col {}% di cluster riesco a coprire il 100% di metriche che hanno almeno un arco uscente '.format(str(eff)))
+	#print('Col {}% di cluster riesco a coprire il 100% di metriche che hanno almeno un arco uscente '.format(str(eff)))
 	
 	covGraph_v1 = MGM.subgraph(listOfMetrics+listOfCovCluster)
 	if draw:
@@ -89,24 +80,21 @@ def exeMinSetCoverV1(fileNodes,MGM,outputFileName,draw=False):
 
 	return listOfCovCluster
 
-def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM,outputFileName,draw=False):
+def exeMinSetCoverV2(MGM,listOfCovCluster,outputFileName,draw=False):
 	listOfMetrics = []
 	listOfClusters = []
 	listOfInputs = []
 
-	for file in fileNodes:
-		with open(file, 'r') as db:
-			csvreader = csv.reader(db)
-			for row in csvreader:
-				if 'METRICS.csv' in file:
-					listOfMetrics.append(row[0])
-				elif 'CLUSTERS.csv' in file:
-					listOfClusters.append(row[0])
-				else:
-					listOfInputs.append(row[0])
+	for node in MGM.nodes():
+		if 'M' in node:
+			listOfMetrics.append(node)
+		elif 'CL' in node:
+			listOfClusters.append(node)
+		elif 'I' in node:
+			listOfInputs.append(node)
 	
 	subMGM = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfInputs)
-	listOfInputs	=	list(set(listOfInputs))
+
 	
 	listOfCovInput = []
 	for covCluster in listOfCovCluster:
@@ -118,5 +106,38 @@ def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM,outputFileName,draw=False):
 	covGraph_v2 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput)
 	if draw:
 		drawGraph(covGraph_v2, outputFileName, pos,True)
+	
+	print('INPUTS COV: {}'.format(len(listOfCovInput)), '/ ALL INPUTS: {}'.format(len(listOfInputs)))
+	return listOfCovInput
 
-	print(len(listOfCovInput),len(listOfInputs))
+def getMinimumCostEdge(listOfWeightEdgeAttr, source):
+	minW = 999999
+	minTarget = None
+	for edgeAttr in listOfWeightEdgeAttr:
+		tmp_min = listOfWeightEdgeAttr[(edgeAttr[0],edgeAttr[1])]
+		if source == edgeAttr[0] and tmp_min < minW:
+			minW		=	tmp_min
+			minTarget	=	edgeAttr[1]
+			
+	return minTarget
+
+def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput, outputFileName, draw=False):
+	listOfMetrics = [x for x in MGM.nodes if 'M' in x]
+	listOfSources = [x for x in MGM.nodes if 'S' in x]
+
+	subMGM 		= 	MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput+listOfSources)
+
+	listOfWeightEdgeAttr		=	nx.get_edge_attributes(subMGM, 'weight')
+
+	listOfMinCostSources		=	[ getMinimumCostEdge(listOfWeightEdgeAttr,inputCov) for inputCov in listOfCovInput if getMinimumCostEdge(listOfWeightEdgeAttr,inputCov) is not None]
+	
+	covGraph_v3 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput+listOfMinCostSources)
+	
+	print('SOURCE MIN COST: {}'.format(len(listOfMinCostSources)), '/ ALL SOURCE: {}'.format(len(listOfSources)))
+
+	if draw:
+		drawGraph(covGraph_v3, outputFileName, pos,True)
+
+
+	return listOfMinCostSources
+	
