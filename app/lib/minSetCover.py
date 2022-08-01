@@ -1,6 +1,7 @@
 import networkx as nx
 import csv
-from lib.draw import drawGraph 
+from lib.draw import drawGraph
+from lib.position import pos
 
 #create X from edge to respect the paper S is a subSet of X
 def makeXForAlgo(listoOfNodes,Graph):
@@ -84,7 +85,7 @@ def exeMinSetCoverV1(fileNodes,MGM,outputFileName,draw=False):
 	
 	covGraph_v1 = MGM.subgraph(listOfMetrics+listOfCovCluster)
 	if draw:
-		drawGraph(covGraph_v1, outputFileName)
+		drawGraph(covGraph_v1, outputFileName, pos,True)
 
 	return listOfCovCluster
 
@@ -116,6 +117,6 @@ def exeMinSetCoverV2(fileNodes,listOfCovCluster,MGM,outputFileName,draw=False):
 
 	covGraph_v2 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput)
 	if draw:
-		drawGraph(covGraph_v2, outputFileName)
+		drawGraph(covGraph_v2, outputFileName, pos,True)
 
 	print(len(listOfCovInput),len(listOfInputs))

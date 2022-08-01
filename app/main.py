@@ -1,5 +1,5 @@
-import configparser
 import networkx as nx
+import configparser
 
 from lib.convertXlsToCSV import convertXlsToCSV
 from lib.parser import getGraphFromCSV
@@ -55,24 +55,24 @@ filePosName	    =	config['GRAPH']['filePosName']
 outputPath		=	config['GRAPH']['outputPath']
 outputFigGraph	=	outputPath+'MGM_COLORED.pdf'
 
-drawGraph(MGM, outputFigGraph, pos)
+#drawGraph(MGM, outputFigGraph, pos, catColor=True)
 
 
 ########################################################################################
 #STEP 5 - test MinSetCov v1
 
-outputFile		=	outputPath+'MinSetCov_v1.pdf'
+outputFile		=	outputPath+'MinSetCov-Colored_v1.pdf'
 
-#listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile)
+listOfCovCluster	=	exeMinSetCoverV1(fileNodes, MGM, outputFile,True)
 
 
 
 ########################################################################################
 #STEP 6 - test MinSetCov v2
 
-outputFile_v2		=	outputPath+'MinSetCov_v2.pdf'
+outputFile_v2		=	outputPath+'MinSetCov-Colored_v2.pdf'
 
-#exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM,outputFile_v2,True)
+exeMinSetCoverV2(fileNodes, listOfCovCluster, MGM,outputFile_v2,True)
 
 ########################################################################################
 print('ok')
