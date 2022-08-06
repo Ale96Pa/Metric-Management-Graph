@@ -4,6 +4,7 @@ import matplotlib as mpl
 import scipy as sp
 
 import configparser
+from lib.position import pos
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -13,7 +14,7 @@ categoryColors	=	config['GRAPH']['categoryColors'].split(',')
 
 
 
-def drawGraph(G,outputFileName,pos,catColor=False,saveFig=True,fontSize=5,nodeSize=400):
+def drawGraph(G,outputFileName,pos=pos,catColor=False,saveFig=True,show=False,fontSize=5,nodeSize=400):
 
 	plt.figure(figsize=(21,30), frameon=False)
 
@@ -58,6 +59,9 @@ def drawGraph(G,outputFileName,pos,catColor=False,saveFig=True,fontSize=5,nodeSi
 	ax.margins()
 
 	plt.axis("off")
+	
 	if saveFig:
 		plt.savefig(outputFileName)
-	plt.show()
+	
+	if show:
+		plt.show()

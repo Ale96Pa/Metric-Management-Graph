@@ -14,6 +14,7 @@ from lib.draw import drawGraph
 from lib.minSetCover import exeMinSetCoverV1
 from lib.minSetCover import exeMinSetCoverV2
 from lib.minSetCover import exeMinSetCoverV3
+from lib.minSetCover import findSmallestSetOfInputsCoverAllMetric
 
 
 config = configparser.ConfigParser()
@@ -63,26 +64,32 @@ outputFigGraph	=	outputPath+'MGM_COLORED.pdf'
 #STEP 5 - test MinSetCov METRIC -> CLUSTER 
 
 outputFile		=	outputPath+'MinSetCov-Colored_v1.pdf'
-
-listOfCovCluster	=	exeMinSetCoverV1(MGM, outputFile)
-
+listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM, outputFile)
+drawGraph(covGraph_v1, outputFile,catColor=True)
 
 
 ########################################################################################
 #STEP 6 - test MinSetCov METRIC -> COVERED(CLUSTERS) -> INPUT
 
 outputFile_v2		=	outputPath+'MinSetCov-Colored_v2.pdf'
-
-listOfCovInput      =   exeMinSetCoverV2(MGM,listOfCovCluster, outputFile_v2)
+listOfCovInput,covGraph_v2      =   exeMinSetCoverV2(MGM,listOfCovCluster, outputFile_v2)
+drawGraph(covGraph_v2, outputFile_v2,catColor=True)
 
 ########################################################################################
 #STEP 7 - test MinSetCov METRIC -> COVERED(CLUSTERS) -> INPUT -> source with MIN WEIGHT()
 
 outputFile_v3		=	outputPath+'MinSetCov-Colored_v3.pdf'
+listOfMinCostSources,covGraph_v3   =   exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,outputFile_v3)
+drawGraph(covGraph_v3, outputFile_v3,catColor=True)
 
-exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,outputFile_v3,True)
+########################################################################################
+#T450 - find the smallest set of inputs that covers all METRIC 
+
+outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_AllMetric-Colored.pdf'
+findSmallestSetOfInputsCoverAllMetric(MGM, outputFileSmallestInMetric)
 
 
 ########################################################################################
+
 print('ok')
 
