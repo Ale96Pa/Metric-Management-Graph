@@ -1,4 +1,5 @@
 import networkx as nx
+import random
 			
 
 def genPosNodes(G,delta,pos,filePosName):
@@ -41,3 +42,26 @@ def genPosNodes(G,delta,pos,filePosName):
 	print('END - the positioning of nodes')
 
 
+def makeRandSubGraph(MGM,listOfMetrics):
+
+	listOthersNode  = [ node for node in MGM.nodes() if 'M' not in node]
+	subGraph    =   MGM.subgraph(listOfMetrics+listOthersNode)
+
+	list_of_dangl_CL = [node for node in subGraph.nodes if subGraph.in_degree(node) > 0 and 'CL' in node]
+	listOthersNode  =[ node for node in MGM.nodes() if 'M' not in node and 'CL' not in node]
+	subGraph    =   subGraph.subgraph(listOfMetrics+list_of_dangl_CL+listOthersNode)
+
+
+	list_of_dangl_IN = [node for node in subGraph.nodes if subGraph.in_degree(node) > 0 and 'I' in node]
+	listOthersNode  =[ node for node in MGM.nodes() if 'M' not in node and 'CL' not in node and 'I' not in node]
+	subGraph    =   subGraph.subgraph(listOfMetrics+list_of_dangl_CL+list_of_dangl_IN+listOthersNode)
+
+	list_of_dangl_SRC = [node for node in subGraph.nodes if subGraph.in_degree(node) > 0 and 'S' in node]
+	subGraph    =   subGraph.subgraph(listOfMetrics+list_of_dangl_CL+list_of_dangl_IN+list_of_dangl_SRC)
+
+	return subGraph
+
+def makeCategorySubGraph(MGM, category):
+	listOfMetrics   = [node[0] for node in MGM.nodes(data="category") if node[1] in category]
+	subGraph	=	 makeRandSubGraph(MGM,listOfMetrics)
+	return subGraph

@@ -1,10 +1,14 @@
 import networkx as nx
 import configparser
+import random
+
 
 from lib.convertXlsToCSV import convertXlsToCSV
 from lib.parser import getGraphFromCSV
 
 from lib.tools import genPosNodes
+from lib.tools import makeRandSubGraph
+from lib.tools import makeCategorySubGraph
 from lib.position import pos
 
 from lib.draw import drawGraph
@@ -14,11 +18,12 @@ from lib.draw import drawGraph
 from lib.minSetCover import exeMinSetCoverV1
 from lib.minSetCover import exeMinSetCoverV2
 from lib.minSetCover import exeMinSetCoverV3
-from lib.minSetCover import findSmallestSetOfInputsCoverAllMetric
+from lib.minSetCover import findSmallestSetOfInputsCoverMetrics
 
 
 config = configparser.ConfigParser()
 config.read('config.ini')
+print('START - MAIN')
 
 ########################################################################################
 #STEP 1 convert XLS DB TO CSV
@@ -46,7 +51,7 @@ MGM	=	getGraphFromCSV(fileNodes, fileEdges, fileGraphName)
 #STEP 3 make position node file to see a good graph
 
 delta			=	[int(x) for x in config['GRAPH']['delta'].split(',')]
-position			    =	[int(x) for x in config['GRAPH']['position'].split(',')]
+position		=	[int(x) for x in config['GRAPH']['position'].split(',')]
 filePosName	    =	config['GRAPH']['filePosName']
 
 #genPosNodes(MGM, delta, position, filePosName)
@@ -64,32 +69,55 @@ outputFigGraph	=	outputPath+'MGM_COLORED.pdf'
 #STEP 5 - test MinSetCov METRIC -> CLUSTER 
 
 outputFile		=	outputPath+'MinSetCov-Colored_v1.pdf'
-listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM, outputFile)
-drawGraph(covGraph_v1, outputFile,catColor=True)
+#listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM)
+#drawGraph(covGraph_v1, outputFile,catColor=True)
 
 
 ########################################################################################
 #STEP 6 - test MinSetCov METRIC -> COVERED(CLUSTERS) -> INPUT
 
 outputFile_v2		=	outputPath+'MinSetCov-Colored_v2.pdf'
-listOfCovInput,covGraph_v2      =   exeMinSetCoverV2(MGM,listOfCovCluster, outputFile_v2)
-drawGraph(covGraph_v2, outputFile_v2,catColor=True)
+#listOfCovInput,covGraph_v2      =   exeMinSetCoverV2(MGM,listOfCovCluster)
+#drawGraph(covGraph_v2, outputFile_v2,catColor=True)
 
 ########################################################################################
 #STEP 7 - test MinSetCov METRIC -> COVERED(CLUSTERS) -> INPUT -> source with MIN WEIGHT()
 
 outputFile_v3		=	outputPath+'MinSetCov-Colored_v3.pdf'
-listOfMinCostSources,covGraph_v3   =   exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,outputFile_v3)
-drawGraph(covGraph_v3, outputFile_v3,catColor=True)
+#listOfMinCostSources,covGraph_v3   =   exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput)
+#drawGraph(covGraph_v3, outputFile_v3,catColor=True)
 
 ########################################################################################
-#T450 - find the smallest set of inputs that covers all METRIC 
+#T450 - find the smallest set of inputs that covers all METRIC
 
 outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_AllMetric-Colored.pdf'
-findSmallestSetOfInputsCoverAllMetric(MGM, outputFileSmallestInMetric)
+#findSmallestSetOfInputsCoverMetrics(MGM, outputFileSmallestInMetric)
 
 
 ########################################################################################
+#T451 - Take a subSet of Metric and run the min-set-cover-metric
 
-print('ok')
+listOfMetrics   = [node for node in MGM.nodes() if 'M' in node and random.random() > 0.65]
+subGraph    =   makeRandSubGraph(MGM,listOfMetrics)
+
+outputFileSubGraph  =   outputPath+'SUBSET-Metric-Colored.pdf'
+drawGraph(subGraph, outputFileSubGraph,catColor=True)
+
+outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_SUBSET-Metric-Colored.pdf'
+findSmallestSetOfInputsCoverMetrics(subGraph, outputFileSmallestInMetric)
+
+#######################################################################################
+#T452 - Take a subSet of Metric and run the min-set-cover-metric
+
+category	=	['Attack Metrics','Defense Metrics']
+subGraph	=	makeCategorySubGraph(MGM, category)
+
+outputFileSubGraph  =   outputPath+'CATEGORY-Metric-Colored.pdf'
+drawGraph(subGraph, outputFileSubGraph,catColor=True)
+
+outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_CATEGORY-Metric-Colored.pdf'
+findSmallestSetOfInputsCoverMetrics(subGraph, outputFileSmallestInMetric)
+
+
+print('END - MAIN')
 

@@ -43,7 +43,7 @@ def greedyMinSetCover(X,S):
 		
 	return I
 
-def exeMinSetCoverV1(MGM,outputFileName):
+def exeMinSetCoverV1(MGM):
 	listOfMetrics = []
 	listOfClusters = []
 	listOfInputs = []
@@ -68,8 +68,8 @@ def exeMinSetCoverV1(MGM,outputFileName):
 	I = greedyMinSetCover(X, S)
 
 	listOfCovCluster = [listOfClusters[el] for el in I]
-	
-	print('CLSTERS COV: {}'.format(len(listOfClusters)), '/ ALL CLASTERS: {}'.format(len(listOfCovCluster)))
+
+	print('MIN CLSTERS COV: {}'.format(len(listOfCovCluster)), '/ ALL CLASTERS: {}'.format(len(listOfClusters)))
 
 	eff = (len(listOfCovCluster)/len(listOfClusters))*100
 
@@ -79,7 +79,7 @@ def exeMinSetCoverV1(MGM,outputFileName):
 
 	return listOfCovCluster,covGraph_v1
 
-def exeMinSetCoverV2(MGM,listOfCovCluster,outputFileName):
+def exeMinSetCoverV2(MGM,listOfCovCluster):
 	listOfMetrics = []
 	listOfClusters = []
 	listOfInputs = []
@@ -104,7 +104,7 @@ def exeMinSetCoverV2(MGM,listOfCovCluster,outputFileName):
 
 	covGraph_v2 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput)
 	
-	print('INPUTS COV: {}'.format(len(listOfCovInput)), '/ ALL INPUTS: {}'.format(len(listOfInputs)))
+	print('MIN INPUTS COV: {}'.format(len(listOfCovInput)), '/ ALL INPUTS: {}'.format(len(listOfInputs)))
 
 	return listOfCovInput,covGraph_v2
 
@@ -119,7 +119,7 @@ def getMinimumCostEdge(listOfWeightEdgeAttr, source):
 			
 	return minTarget
 
-def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput, outputFileName):
+def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput):
 	listOfMetrics = [x for x in MGM.nodes if 'M' in x]
 	listOfSources = [x for x in MGM.nodes if 'S' in x]
 
@@ -131,27 +131,28 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput, outputFileName):
 	
 	covGraph_v3 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput+listOfMinCostSources)
 	
-	print('SOURCE MIN COST: {}'.format(len(listOfMinCostSources)), '/ ALL SOURCE: {}'.format(len(listOfSources)))
+	print('MIN SOURCE COST: {}'.format(len(listOfMinCostSources)), '/ ALL SOURCE: {}'.format(len(listOfSources)))
 
 	return listOfMinCostSources,covGraph_v3
 	
-def findSmallestSetOfInputsCoverAllMetric(MGM,outputFile,draw=True,saveFig=True,color=True,show=False):
+def findSmallestSetOfInputsCoverMetrics(MGM,outputFile,draw=True,saveFig=True,color=True,show=False):
 
 	outputFile_v1	=	outputFile.split('.')[0]+"_v1."+outputFile.split('.')[1]
-	listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM, outputFile)
+	listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM)
 
 
 	outputFile_v2	=	outputFile.split('.')[0]+"_v2."+outputFile.split('.')[1]
-	listOfCovInput,covGraph_v2    =   exeMinSetCoverV2(MGM,listOfCovCluster, outputFile_v2)
+	listOfCovInput,covGraph_v2    =   exeMinSetCoverV2(MGM,listOfCovCluster)
 	
 
 	outputFile_COMPLETE	=	outputFile
-	listOfMinCostSources,covGraph_v3	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,outputFile_COMPLETE)
+	listOfMinCostSources,covGraph_v3	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput)
 
 	if draw:
 		drawGraph(covGraph_v1, outputFile_v1,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v2, outputFile_v2,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v3, outputFile_COMPLETE,saveFig=saveFig,catColor=color,show=show)
 	
-	print('EDN TASK: T450')
+	print('EDN TASK: findSmallestSetOfInputsCoverMetrics()')
+
 
