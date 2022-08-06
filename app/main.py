@@ -123,7 +123,6 @@ listOfInput	=	[node for node in MGM.nodes() if 'I' in node and random.random() >
 outputFileminSetCovByInput	=	outputPath+'MGM_MinSetCover_ByINPUT-COLORED.pdf'
 #minSetCovByInput(MGM,listOfInput,outputFileminSetCovByInput)
 
-
 #######################################################################################
 #######################################################################################
 
