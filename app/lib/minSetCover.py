@@ -137,6 +137,8 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput):
 	
 def findSmallestSetOfInputsCoverMetrics(MGM,outputFile,draw=True,saveFig=True,color=True,show=False):
 
+	outputFile_BASE	=	outputFile.split('.')[0]+"_START."+outputFile.split('.')[1]
+
 	outputFile_v1	=	outputFile.split('.')[0]+"_v1."+outputFile.split('.')[1]
 	listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM)
 
@@ -145,10 +147,11 @@ def findSmallestSetOfInputsCoverMetrics(MGM,outputFile,draw=True,saveFig=True,co
 	listOfCovInput,covGraph_v2    =   exeMinSetCoverV2(MGM,listOfCovCluster)
 	
 
-	outputFile_COMPLETE	=	outputFile
+	outputFile_COMPLETE	=	outputFile.split('.')[0]+"_COVERED."+outputFile.split('.')[1]
 	listOfMinCostSources,covGraph_v3	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput)
 
 	if draw:
+		drawGraph(MGM, outputFile_BASE,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v1, outputFile_v1,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v2, outputFile_v2,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v3, outputFile_COMPLETE,saveFig=saveFig,catColor=color,show=show)
@@ -156,3 +159,12 @@ def findSmallestSetOfInputsCoverMetrics(MGM,outputFile,draw=True,saveFig=True,co
 	print('EDN TASK: findSmallestSetOfInputsCoverMetrics()')
 
 
+def minSetCovByInput(MGM, listOfInput, outputFile):
+	listOfCluster	= 	[edge[0] for inpt in listOfInput for edge in MGM.in_edges(inpt) if MGM.out_degree(edge[0]) == 1]
+	listOfMetrics	=	[edge[0] for edge in MGM.in_edges(listOfCluster) ]
+	listOfSources	=	[edge[1] for edge in MGM.out_edges(listOfInput) ]
+
+	subGraph	=	MGM.subgraph(listOfMetrics+listOfCluster+listOfInput+listOfSources)
+	
+
+	findSmallestSetOfInputsCoverMetrics(subGraph,outputFile)

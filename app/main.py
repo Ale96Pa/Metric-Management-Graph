@@ -1,6 +1,7 @@
 import networkx as nx
 import configparser
 import random
+import time
 
 
 from lib.convertXlsToCSV import convertXlsToCSV
@@ -19,8 +20,9 @@ from lib.minSetCover import exeMinSetCoverV1
 from lib.minSetCover import exeMinSetCoverV2
 from lib.minSetCover import exeMinSetCoverV3
 from lib.minSetCover import findSmallestSetOfInputsCoverMetrics
+from lib.minSetCover import minSetCovByInput
 
-
+start = time.time()
 config = configparser.ConfigParser()
 config.read('config.ini')
 print('START - MAIN')
@@ -62,13 +64,13 @@ filePosName	    =	config['GRAPH']['filePosName']
 outputPath		=	config['GRAPH']['outputPath']
 outputFigGraph	=	outputPath+'MGM_COLORED.pdf'
 
-#drawGraph(MGM, outputFigGraph, pos, catColor=True)
+#drawGraph(MGM, outputFigGraph, catColor=True)
 
 
 ########################################################################################
 #STEP 5 - test MinSetCov METRIC -> CLUSTER 
 
-outputFile		=	outputPath+'MinSetCov-Colored_v1.pdf'
+outputFile		=	outputPath+'MGM_MinSetCov-Colored_v1.pdf'
 #listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM)
 #drawGraph(covGraph_v1, outputFile,catColor=True)
 
@@ -76,21 +78,22 @@ outputFile		=	outputPath+'MinSetCov-Colored_v1.pdf'
 ########################################################################################
 #STEP 6 - test MinSetCov METRIC -> COVERED(CLUSTERS) -> INPUT
 
-outputFile_v2		=	outputPath+'MinSetCov-Colored_v2.pdf'
+outputFile_v2		=	outputPath+'MGM_MinSetCov-Colored_v2.pdf'
 #listOfCovInput,covGraph_v2      =   exeMinSetCoverV2(MGM,listOfCovCluster)
 #drawGraph(covGraph_v2, outputFile_v2,catColor=True)
 
 ########################################################################################
 #STEP 7 - test MinSetCov METRIC -> COVERED(CLUSTERS) -> INPUT -> source with MIN WEIGHT()
 
-outputFile_v3		=	outputPath+'MinSetCov-Colored_v3.pdf'
+outputFile_v3		=	outputPath+'MGM_MinSetCov-Colored_v3.pdf'
 #listOfMinCostSources,covGraph_v3   =   exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput)
 #drawGraph(covGraph_v3, outputFile_v3,catColor=True)
 
 ########################################################################################
+########################################################################################
 #T450 - find the smallest set of inputs that covers all METRIC
 
-outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_AllMetric-Colored.pdf'
+outputFileSmallestInMetric  =   outputPath+'MGM_MinSetCover_TOTAL-Colored.pdf'
 #findSmallestSetOfInputsCoverMetrics(MGM, outputFileSmallestInMetric)
 
 
@@ -100,24 +103,30 @@ outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_AllMetric-Color
 listOfMetrics   = [node for node in MGM.nodes() if 'M' in node and random.random() > 0.65]
 subGraph    =   makeRandSubGraph(MGM,listOfMetrics)
 
-outputFileSubGraph  =   outputPath+'SUBSET-Metric-Colored.pdf'
-drawGraph(subGraph, outputFileSubGraph,catColor=True)
-
-outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_SUBSET-Metric-Colored.pdf'
-findSmallestSetOfInputsCoverMetrics(subGraph, outputFileSmallestInMetric)
+outputFileSmallestInMetric  =   outputPath+'MGM_MinSetCover_SUBSET_Metrics-Colored.pdf'
+#findSmallestSetOfInputsCoverMetrics(subGraph, outputFileSmallestInMetric)
 
 #######################################################################################
-#T452 - Take a subSet of Metric and run the min-set-cover-metric
+#T452 - Take a subSet of CATEGORY Metric and run the min-set-cover-metric
 
-category	=	['Attack Metrics','Defense Metrics']
+category	=	['Vulnerability Metrics','Situation Metrics']
 subGraph	=	makeCategorySubGraph(MGM, category)
 
-outputFileSubGraph  =   outputPath+'CATEGORY-Metric-Colored.pdf'
-drawGraph(subGraph, outputFileSubGraph,catColor=True)
+outputFileSmallestInMetric  =   outputPath+'MGM_MinSetCover_CATEGORY_Metrics-Colored.pdf'
+#findSmallestSetOfInputsCoverMetrics(subGraph, outputFileSmallestInMetric)
 
-outputFileSmallestInMetric  =   outputPath+'MinSet_of_INPUTS_COV_CATEGORY-Metric-Colored.pdf'
-findSmallestSetOfInputsCoverMetrics(subGraph, outputFileSmallestInMetric)
+#######################################################################################
+#T453 - Take a subSet of INPUTS (or 1 INPUT) - what are all the metrics which I can cover?
 
+listOfInput	=	[node for node in MGM.nodes() if 'I' in node and random.random() > 0.65]
+
+outputFileminSetCovByInput	=	outputPath+'MGM_MinSetCover_ByINPUT-COLORED.pdf'
+#minSetCovByInput(MGM,listOfInput,outputFileminSetCovByInput)
+
+
+#######################################################################################
+#######################################################################################
 
 print('END - MAIN')
-
+end = time.time()
+print(end - start)
