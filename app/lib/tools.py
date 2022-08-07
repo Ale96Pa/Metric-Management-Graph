@@ -42,7 +42,7 @@ def genPosNodes(G,delta,pos,filePosName):
 	print('END - the positioning of nodes')
 
 
-def makeRandSubGraph(MGM,listOfMetrics):
+def makeSubGraphByMetrics(MGM,listOfMetrics):
 
 	listOthersNode  = [ node for node in MGM.nodes() if 'M' not in node]
 	subGraph    =   MGM.subgraph(listOfMetrics+listOthersNode)
@@ -63,5 +63,5 @@ def makeRandSubGraph(MGM,listOfMetrics):
 
 def makeCategorySubGraph(MGM, category):
 	listOfMetrics   = [node[0] for node in MGM.nodes(data="category") if node[1] in category]
-	subGraph	=	 makeRandSubGraph(MGM,listOfMetrics)
+	subGraph	=	 makeSubGraphByMetrics(MGM,listOfMetrics)
 	return subGraph
