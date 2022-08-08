@@ -158,18 +158,21 @@ def MGMminSetCover(MGM,outputFile,draw=True,saveFig=True,color=True,show=False):
 	
 	print('END TASK: MGMminSetCover()')
 
-def getListOfClusters(MGM,listOfInput):
+def getListOfClusters(MGM,listOfInput,checkInputs=True):
 	#this function respect that a CLUSTER set is a sub sef of nodes
 	listOfCluster	=	[]
 	for inpt in listOfInput:
 		clusters	= [edge[0] for edge in MGM.in_edges(inpt)]	
 		for cluster in clusters:
 			outEdges	=	[edge[1] for edge in MGM.out_edges(cluster)]
-			if set(outEdges).issubset(set(listOfInput)):
-				listOfCluster.append(cluster)
+			if checkInputs == True:
+				if set(outEdges).issubset(set(listOfInput)):
+					listOfCluster.append(cluster)
+			else:
+				if set(outEdges).issubset(set(checkInputs)):
+					listOfCluster.append(cluster)
 	
 	return list(set(listOfCluster))
-
 
 def minSetCovByINPUT(MGM, listOfInput, outputFile):
 	listOfCluster	= 	getListOfClusters(MGM,listOfInput)
@@ -183,10 +186,9 @@ def minSetCovByINPUT(MGM, listOfInput, outputFile):
 	results	=	('With: {} inputs I covered: {} metrics\n\n').format(len(listOfInput), len(listOfMetrics))	
 	print(results)
 
-
-
-def minSetCovBySOURCE(MGM, listOfSources, outputFile):
-	listOfInput		=	list(set([edge[0] for source in listOfSources for edge in MGM.in_edges(source) ]))
+def minSetCovBySOURCE(MGM, listOfSources, outputFile, listOfInput=True):
+	if listOfInput == True:
+		listOfInput		=	list(set([edge[0] for source in listOfSources for edge in MGM.in_edges(source) ]))
 	listOfCluster	=	getListOfClusters(MGM,listOfInput)
 	listOfMetrics	=	list(set([edge[0] for edge in MGM.in_edges(listOfCluster) ]))
 	
@@ -195,3 +197,38 @@ def minSetCovBySOURCE(MGM, listOfSources, outputFile):
 	MGMminSetCover(subGraph,outputFile)
 	results	=	('With: {} sources I covered: {} metrics\n\n').format(len(listOfSources), len(listOfMetrics))	
 	print(results)
+
+def maxSetCovByATTR(MGM,valMax,outputFile,attr):
+	listOfInputs				=	[inp for inp in MGM.nodes if 'I' in inp]
+	listOfWeightEdgeAttr		=	nx.get_edge_attributes(MGM, attr)
+
+	listOfCovSources	=	[]
+	listOfCovInputs		=	[]
+
+	for inp in listOfInputs:
+		tmpCovInp	=	listOfCovInputs
+		minSource	=	getMinimumCostEdge(listOfWeightEdgeAttr,inp)
+		param		=	(inp,minSource)
+		attrValue	=	listOfWeightEdgeAttr.get(param)
+		
+		#first because there are inputs without edge
+		#second to not consider duplicate
+		#third check if the substracrion is correct
+		#fourth check if exist a valid cluster
+		if (attrValue is not None and 
+				minSource not in listOfCovSources and
+					valMax - attrValue >= 0 and
+						getListOfClusters(MGM,[inp],tmpCovInp+[inp]) ):
+			listOfCovSources.append(minSource)
+			listOfCovInputs.append(inp)
+			valMax -= attrValue
+	
+	listOfCovCluster	=	getListOfClusters(MGM,listOfCovInputs)
+	listOfCovMetrics	=	list(set([edge[0] for edge in MGM.in_edges(listOfCovCluster) ]))
+
+	subGraph	=	MGM.subgraph(listOfCovMetrics+listOfCovCluster+listOfCovInputs+listOfCovSources)
+	MGMminSetCover(subGraph,outputFile)
+
+	results	=	'\nHo selezionato {} source\nHo coperto: {} metriche\nIl COST residuo è di: {} '.format(len(listOfCovSources),len(listOfCovMetrics), valMax)
+	print(results)
+	

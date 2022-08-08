@@ -22,6 +22,7 @@ from lib.minSetCover import exeMinSetCoverV3
 from lib.minSetCover import MGMminSetCover
 from lib.minSetCover import minSetCovByINPUT
 from lib.minSetCover import minSetCovBySOURCE
+from lib.minSetCover import maxSetCovByATTR
 
 start = time.time()
 config = configparser.ConfigParser()
@@ -125,13 +126,22 @@ outputFileminSetCovByInput	=	outputPath+'MGM_MinSetCover_ByINPUT-COLORED.pdf'
 #minSetCovByINPUT(MGM,listOfInput,outputFileminSetCovByInput)
 
 #######################################################################################
-#T453 - Take a subSet of SOURCE (or 1 SOURCE) - what are all the metrics which I can cover?
+#T454 - Take a subSet of SOURCE (or 1 SOURCE) - what are all the metrics which I can cover?
 
 listOfSources	=	[node for node in MGM.nodes() if 'S' in node and random.random() > 0.65]
 listOfSources    =   ['S001', 'S003', 'S004', 'S012', 'S020', 'S021', 'S022', 'S030', 'S032', 'S033', 'S036', 'S039']
 
 outputFileminSetCovBySOURCE	=	outputPath+'MGM_MinSetCover_BySOURCE-COLORED.pdf'
-minSetCovBySOURCE(MGM, listOfSources, outputFileminSetCovBySOURCE)
+#minSetCovBySOURCE(MGM, listOfSources, outputFileminSetCovBySOURCE)
+
+#######################################################################################
+#T455 - Given in input a Graph and a MAXIMUM COST return all metric covered
+
+maximumCost =   15
+
+outputFileMetricsToMaxCost  =   outputPath+'MGM_MaxSetCover_ByCOST-COLORED.pdf'
+
+maxSetCovByATTR(MGM,maximumCost,outputFileMetricsToMaxCost,attr='weight')
 
 #######################################################################################
 
