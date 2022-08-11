@@ -29,8 +29,21 @@ def drawGraph(G,outputFileName,pos=pos,catColor=False,saveFig=True,show=False,fo
 	
 	nx.draw_networkx(G, pos, **options)
 	
+	#Draw weight
 	labels = nx.get_edge_attributes(G,'weight')
 	nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+
+	
+	
+	#DRAW COMPUTATION ATTR
+	pos_attrs = {}
+	for node, coords in pos.items():
+		if 'S' in node:
+			pos_attrs[node] = (coords[0]+ 1, coords[1])
+
+	node_labels = nx.get_node_attributes(G,'computation')
+	nx.draw_networkx_labels(G, pos_attrs, labels = node_labels, font_color='brown')
+
 
 
 

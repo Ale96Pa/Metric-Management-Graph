@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
-  <key id="d1" for="edge" attr.name="weight" attr.type="long" />
+  <key id="d2" for="edge" attr.name="weight" attr.type="long" />
+  <key id="d1" for="node" attr.name="computation" attr.type="string" />
   <key id="d0" for="node" attr.name="category" attr.type="string" />
   <graph edgedefault="directed">
     <node id="M001">
@@ -251,45 +252,123 @@
     <node id="I036" />
     <node id="I037" />
     <node id="I038" />
-    <node id="S001" />
-    <node id="S002" />
-    <node id="S003" />
-    <node id="S004" />
-    <node id="S005" />
-    <node id="S006" />
-    <node id="S007" />
-    <node id="S008" />
-    <node id="S010" />
-    <node id="S011" />
-    <node id="S012" />
-    <node id="S013" />
-    <node id="S014" />
-    <node id="S016" />
-    <node id="S017" />
-    <node id="S018" />
-    <node id="S019" />
-    <node id="S020" />
-    <node id="S021" />
-    <node id="S022" />
-    <node id="S023" />
-    <node id="S024" />
-    <node id="S025" />
-    <node id="S026" />
-    <node id="S027" />
-    <node id="S028" />
-    <node id="S029" />
-    <node id="S030" />
-    <node id="S031" />
-    <node id="S032" />
-    <node id="S033" />
-    <node id="S034" />
-    <node id="S035" />
-    <node id="S036" />
-    <node id="S037" />
-    <node id="S038" />
-    <node id="S039" />
-    <node id="S040" />
-    <node id="S041" />
+    <node id="S001">
+      <data key="d1">53</data>
+    </node>
+    <node id="S002">
+      <data key="d1">43</data>
+    </node>
+    <node id="S003">
+      <data key="d1">4</data>
+    </node>
+    <node id="S004">
+      <data key="d1">32</data>
+    </node>
+    <node id="S005">
+      <data key="d1">77</data>
+    </node>
+    <node id="S006">
+      <data key="d1">88</data>
+    </node>
+    <node id="S007">
+      <data key="d1">50</data>
+    </node>
+    <node id="S008">
+      <data key="d1">85</data>
+    </node>
+    <node id="S010">
+      <data key="d1">97</data>
+    </node>
+    <node id="S011">
+      <data key="d1">73</data>
+    </node>
+    <node id="S012">
+      <data key="d1">62</data>
+    </node>
+    <node id="S013">
+      <data key="d1">83</data>
+    </node>
+    <node id="S014">
+      <data key="d1">6</data>
+    </node>
+    <node id="S016">
+      <data key="d1">21</data>
+    </node>
+    <node id="S017">
+      <data key="d1">49</data>
+    </node>
+    <node id="S018">
+      <data key="d1">29</data>
+    </node>
+    <node id="S019">
+      <data key="d1">87</data>
+    </node>
+    <node id="S020">
+      <data key="d1">63</data>
+    </node>
+    <node id="S021">
+      <data key="d1">92</data>
+    </node>
+    <node id="S022">
+      <data key="d1">70</data>
+    </node>
+    <node id="S023">
+      <data key="d1">39</data>
+    </node>
+    <node id="S024">
+      <data key="d1">44</data>
+    </node>
+    <node id="S025">
+      <data key="d1">68</data>
+    </node>
+    <node id="S026">
+      <data key="d1">52</data>
+    </node>
+    <node id="S027">
+      <data key="d1">4</data>
+    </node>
+    <node id="S028">
+      <data key="d1">54</data>
+    </node>
+    <node id="S029">
+      <data key="d1">73</data>
+    </node>
+    <node id="S030">
+      <data key="d1">38</data>
+    </node>
+    <node id="S031">
+      <data key="d1">1</data>
+    </node>
+    <node id="S032">
+      <data key="d1">10</data>
+    </node>
+    <node id="S033">
+      <data key="d1">31</data>
+    </node>
+    <node id="S034">
+      <data key="d1">57</data>
+    </node>
+    <node id="S035">
+      <data key="d1">18</data>
+    </node>
+    <node id="S036">
+      <data key="d1">27</data>
+    </node>
+    <node id="S037">
+      <data key="d1">53</data>
+    </node>
+    <node id="S038">
+      <data key="d1">26</data>
+    </node>
+    <node id="S039">
+      <data key="d1">19</data>
+    </node>
+    <node id="S040">
+      <data key="d1">86</data>
+    </node>
+    <node id="S041">
+      <data key="d1">85</data>
+    </node>
     <edge source="M001" target="CL001" />
     <edge source="M002" target="CL001" />
     <edge source="M003" target="CL002" />
@@ -426,157 +505,157 @@
     <edge source="CL031" target="I037" />
     <edge source="CL031" target="I038" />
     <edge source="I001" target="S001">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I001" target="S024">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I001" target="S002">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I002" target="S003">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I003" target="S004">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I004" target="S002">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I005" target="S005">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I005" target="S006">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I005" target="S026">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I005" target="S008">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I005" target="S027">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I006" target="S007">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I007" target="S028">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I008" target="S006">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I008" target="S026">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I008" target="S008">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I008" target="S027">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I009" target="S010">
-      <data key="d1">3</data>
+      <data key="d2">3</data>
     </edge>
     <edge source="I010" target="S011">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I010" target="S029">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I010" target="S030">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I010" target="S031">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I011" target="S032">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I012" target="S012">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I013" target="S013">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I015" target="S014">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I016" target="S003">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I017" target="S014">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I019" target="S025">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I021" target="S001">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I021" target="S004">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I022" target="S001">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I022" target="S004">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I023" target="S004">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I024" target="S016">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I025" target="S017">
-      <data key="d1">3</data>
+      <data key="d2">3</data>
     </edge>
     <edge source="I026" target="S018">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I027" target="S019">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I030" target="S020">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I031" target="S039">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I031" target="S040">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I031" target="S041">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I032" target="S021">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I033" target="S022">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I034" target="S023">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I035" target="S033">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I036" target="S034">
-      <data key="d1">4</data>
+      <data key="d2">4</data>
     </edge>
     <edge source="I037" target="S035">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
     <edge source="I037" target="S036">
-      <data key="d1">1</data>
+      <data key="d2">1</data>
     </edge>
     <edge source="I038" target="S037">
-      <data key="d1">5</data>
+      <data key="d2">5</data>
     </edge>
     <edge source="I038" target="S038">
-      <data key="d1">2</data>
+      <data key="d2">2</data>
     </edge>
   </graph>
 </graphml>

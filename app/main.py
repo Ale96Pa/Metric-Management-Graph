@@ -23,6 +23,7 @@ from lib.minSetCover import MGMminSetCover
 from lib.minSetCover import minSetCovByINPUT
 from lib.minSetCover import minSetCovBySOURCE
 from lib.minSetCover import maxSetCovByATTR
+from lib.minSetCover import minCapacitySetCover
 
 start = time.time()
 config = configparser.ConfigParser()
@@ -96,7 +97,7 @@ outputFile_v3		=	outputPath+'MGM_MinSetCov-Colored_v3.pdf'
 #T450 - find the smallest set of inputs that covers all METRIC
 
 outputFileSmallestInMetric  =   outputPath+'MGM_MinSetCover_TOTAL-Colored.pdf'
-#MGMminSetCover(MGM, outputFileSmallestInMetric)
+MGMminSetCover(MGM, outputFileSmallestInMetric)
 
 
 ########################################################################################
@@ -140,10 +141,14 @@ outputFileminSetCovBySOURCE	=	outputPath+'MGM_MinSetCover_BySOURCE-COLORED.pdf'
 maximumCost =   15
 
 outputFileMetricsToMaxCost  =   outputPath+'MGM_MaxSetCover_ByCOST-COLORED.pdf'
-
-maxSetCovByATTR(MGM,maximumCost,outputFileMetricsToMaxCost,attr='weight')
+#maxSetCovByATTR(MGM,maximumCost,outputFileMetricsToMaxCost,attr='weight')
 
 #######################################################################################
+#T456 - What is the minimum computational capacity to cover a list of metrics?
+
+outputFileMinCAPACITY  =   outputPath+'MGM_MinCAPACITY-COLORED.pdf'
+minCapacitySetCover(MGM,outputFileMinCAPACITY)
+
 
 print('END - MAIN')
 end = time.time()

@@ -10,6 +10,8 @@ def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
 			for row in csvreader:
 				if 'M' in row[0]:
 					G.add_node(row[0], category=row[1])
+				if 'S' in row[0]:
+					G.add_node(row[0], computation=row[5])
 				else:
 					G.add_node(row[0])
 
