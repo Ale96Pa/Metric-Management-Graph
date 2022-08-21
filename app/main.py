@@ -24,6 +24,7 @@ from lib.minSetCover import minSetCovByINPUT
 from lib.minSetCover import minSetCovBySOURCE
 from lib.minSetCover import maxSetCovByATTR
 from lib.minSetCover import minCapacitySetCover
+from lib.minSetCover import correctnessMGM
 
 start = time.time()
 config = configparser.ConfigParser()
@@ -71,6 +72,12 @@ outputFigGraph	=	outputPath+'MGM_COLORED.pdf'
 
 
 ########################################################################################
+#STEP 5 apply CORRECTNESS
+outputFigGraphCorr	=	outputPath+'MGM_CORRECTNESS.pdf'
+
+MGM = correctnessMGM(MGM,outputFigGraphCorr)
+
+########################################################################################
 #STEP 5 - test MinSetCov METRIC -> CLUSTER 
 
 outputFile		=	outputPath+'MGM_MinSetCov-Colored_v1.pdf'
@@ -97,7 +104,7 @@ outputFile_v3		=	outputPath+'MGM_MinSetCov-Colored_v3.pdf'
 #T450 - find the smallest set of inputs that covers all METRIC
 
 outputFileSmallestInMetric  =   outputPath+'MGM_MinSetCover_TOTAL-Colored.pdf'
-MGMminSetCover(MGM, outputFileSmallestInMetric)
+#MGMminSetCover(MGM, outputFileSmallestInMetric)
 
 
 ########################################################################################
@@ -148,6 +155,9 @@ outputFileMetricsToMaxCost  =   outputPath+'MGM_MaxSetCover_ByCOST-COLORED.pdf'
 
 outputFileMinCAPACITY  =   outputPath+'MGM_MinCAPACITY-COLORED.pdf'
 minCapacitySetCover(MGM,outputFileMinCAPACITY)
+
+
+
 
 
 print('END - MAIN')

@@ -281,3 +281,44 @@ def minCapacitySetCover(MGM, outputFile):
 	
 	minSetCovBySOURCE(MGM, listOfCovMinCompSources, outputFile)
 
+def correctnessMGM(MGM,outputFile, catColor=True):
+	wrongCL = set()
+	wrongIN = set()
+	vIN = [node for node in MGM.nodes() if 'I' in node]
+	vM	= [node for node in MGM.nodes() if 'M' in node]
+	vCL = [node for node in MGM.nodes() if 'CL' in node]
+	vSRC = [node for node in MGM.nodes() if 'S' in node]
+
+	for inp in vIN:
+		if MGM.out_degree(inp) == 0:
+			print(inp,MGM.out_degree(inp))
+			wrongIN = wrongIN.union({inp})
+			wrongCL = wrongCL.union(set([edge[0] for edge in MGM.in_edges(inp) ]))
+
+
+
+	for wrong in wrongIN:
+		MGM.remove_node(wrong)
+	for wrong in wrongCL:
+		MGM.remove_node(wrong)
+
+	for mt in vM:
+		if MGM.out_degree(mt) == 0:
+			MGM.remove_node(mt)
+	
+	for cl in vCL:
+		if MGM.in_degree(cl) == 0:
+			MGM.remove_node(cl)
+
+	for inp in vIN:
+		if MGM.in_degree(inp) == 0:
+			MGM.remove_node(inp)
+	
+	for src in vSRC:
+		if MGM.in_degree(src) == 0:
+			MGM.remove_node(src)
+
+	drawGraph(MGM, outputFile, catColor=catColor)
+	return MGM
+	
+	
