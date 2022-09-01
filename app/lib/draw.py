@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import scipy as sp
+from lib.parser import fromNetxToCyTo
 
 import configparser
 from lib.position import pos
@@ -15,7 +16,7 @@ categoryColors	=	config['GRAPH']['categoryColors'].split(',')
 
 
 def drawGraph(G,outputFileName,pos=pos,catColor=False,saveFig=True,show=False,fontSize=5,nodeSize=400):
-
+	fromNetxToCyTo(G,outputFileName.split('.')[0]+'.json')
 	plt.figure(figsize=(21,30), frameon=False)
 
 	options = {

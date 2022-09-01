@@ -4,6 +4,7 @@ import csv
 from lib.draw import drawGraph
 
 
+
 #create X from edge to respect the paper S is a subSet of X
 def makeXForAlgo(listoOfNodes,Graph):
 	X = []

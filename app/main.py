@@ -2,10 +2,12 @@ import networkx as nx
 import configparser
 import random
 import time
+import json
 
 
 from lib.convertXlsToCSV import convertXlsToCSV
 from lib.parser import getGraphFromCSV
+from lib.parser import fromNetxToCyTo
 
 from lib.tools import genPosNodes
 from lib.tools import makeSubGraphByMetrics
@@ -104,7 +106,7 @@ outputFile_v3		=	outputPath+'MGM_MinSetCov-Colored_v3.pdf'
 #T450 - find the smallest set of inputs that covers all METRIC
 
 outputFileSmallestInMetric  =   outputPath+'MGM_MinSetCover_TOTAL-Colored.pdf'
-#MGMminSetCover(MGM, outputFileSmallestInMetric)
+MGMminSetCover(MGM, outputFileSmallestInMetric)
 
 
 ########################################################################################

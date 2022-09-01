@@ -1,5 +1,7 @@
 import csv
 import networkx as nx
+import json
+from lib.position import pos
 
 
 def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
@@ -31,3 +33,40 @@ def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
 
 	return G
 	#return a graph object
+
+def fromNetxToCyTo(G,outfileName, pos=pos):
+	jsonGrpah = nx.cytoscape_data(G) 
+	cc = 1
+	for xx in jsonGrpah['elements']['nodes']:
+		iid = xx['data']['id']
+		if 'M001' == iid or 'CL001' == iid or 'I001' == iid or 'I001' == iid or 'S001' == iid:
+			cc=1
+		if 'M' in iid:
+			x = pos[iid][0]+(100)
+			y = pos[iid][1]+(50*cc)
+			cc+= 1
+		elif 'C' in iid:
+			x = pos[iid][0]+(400)
+			y = pos[iid][1]+(100*cc)
+			cc+=1
+		elif 'I' in iid:
+			x = pos[iid][0]+(700)
+			y = pos[iid][1]+(85*cc)
+			cc+=1
+		elif 'S' in iid:
+			x = pos[iid][0]+(1000)
+			y = pos[iid][1]+(70*cc)
+			cc+=1
+		xx.update({'position':{'x': x, 'y': y}})
+
+	#ADD ID TO EDGES - MISSING IN ORIGINAL LIBRARY
+	for xx in jsonGrpah['elements']['edges']:
+		source = xx['data']['source']
+		target = xx['data']['target']
+		iid = source+target
+		xx['data'].update({'id':iid})
+		
+
+	with open(outfileName, "w") as outfile:
+		json.dump(jsonGrpah, outfile)
+
