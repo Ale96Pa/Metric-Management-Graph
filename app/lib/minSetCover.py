@@ -1,8 +1,47 @@
 import networkx as nx
 import csv
 
-from lib.draw import drawGraph
+from app.lib.draw import drawGraph
 
+def correctnessMGM(MGM,outputFile,pos,config, catColor=True):
+	wrongCL = set()
+	wrongIN = set()
+	vIN = [node for node in MGM.nodes() if 'I' in node]
+	vM	= [node for node in MGM.nodes() if 'M' in node]
+	vCL = [node for node in MGM.nodes() if 'CL' in node]
+	vSRC = [node for node in MGM.nodes() if 'S' in node]
+
+	for inp in vIN:
+		if MGM.out_degree(inp) == 0:
+			print(inp,MGM.out_degree(inp))
+			wrongIN = wrongIN.union({inp})
+			wrongCL = wrongCL.union(set([edge[0] for edge in MGM.in_edges(inp) ]))
+
+
+
+	for wrong in wrongIN:
+		MGM.remove_node(wrong)
+	for wrong in wrongCL:
+		MGM.remove_node(wrong)
+
+	for mt in vM:
+		if MGM.out_degree(mt) == 0:
+			MGM.remove_node(mt)
+	
+	for cl in vCL:
+		if MGM.in_degree(cl) == 0:
+			MGM.remove_node(cl)
+
+	for inp in vIN:
+		if MGM.in_degree(inp) == 0:
+			MGM.remove_node(inp)
+	
+	for src in vSRC:
+		if MGM.in_degree(src) == 0:
+			MGM.remove_node(src)
+
+	drawGraph(MGM, outputFile,pos,config, catColor=catColor)
+	return MGM
 
 
 #create X from edge to respect the paper S is a subSet of X
@@ -161,13 +200,13 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput):
 
 	covGraph_v3 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput+listOfMinCostSources)
 	
-	print('[V3] MIN SOURCE COST: {}'.format(len(listOfMinCostSources)), '\t/\tALL SOURCE: {}'.format(len(listOfSources)))
+	print('[V3] MIN SOURCE COV: {}'.format(len(listOfMinCostSources)), '\t/\tALL SOURCE: {}'.format(len(listOfSources)))
 	print('[V3] THE TOTAL COST IS: {}'.format(totalCost))
 	print('[V3] THE TOTAL COMPUTATIONAL COST IS: {}'.format(sumComp))
 
 	return listOfMinCostSources,covGraph_v3
 	
-def MGMminSetCover(MGM,outputFile,draw=True,saveFig=True,color=True,show=False):
+def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,show=False):
 	print('START TASK: MGMminSetCover()')
 	outputFile_BASE	=	outputFile.split('.')[0]+"_START."+outputFile.split('.')[1]
 
@@ -183,10 +222,10 @@ def MGMminSetCover(MGM,outputFile,draw=True,saveFig=True,color=True,show=False):
 	listOfMinCostSources,covGraph_v3	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput)
 
 	if draw:
-		drawGraph(MGM, outputFile_BASE,saveFig=saveFig,catColor=color,show=show)
-		drawGraph(covGraph_v1, outputFile_v1,saveFig=saveFig,catColor=color,show=show)
-		drawGraph(covGraph_v2, outputFile_v2,saveFig=saveFig,catColor=color,show=show)
-		drawGraph(covGraph_v3, outputFile_COMPLETE,saveFig=saveFig,catColor=color,show=show)
+		drawGraph(MGM, outputFile_BASE,pos,config,saveFig=saveFig,catColor=color,show=show)
+		drawGraph(covGraph_v1, outputFile_v1,pos,config,saveFig=saveFig,catColor=color,show=show)
+		drawGraph(covGraph_v2, outputFile_v2,pos,config,saveFig=saveFig,catColor=color,show=show)
+		drawGraph(covGraph_v3, outputFile_COMPLETE,pos,config,saveFig=saveFig,catColor=color,show=show)
 	
 	print('END TASK: MGMminSetCover()')
 	print('----------------------------------------')
@@ -207,19 +246,22 @@ def getListOfClusters(MGM,listOfInput,checkInputs=True):
 	
 	return list(set(listOfCluster))
 
-def minSetCovByINPUT(MGM, listOfInput, outputFile):
+def minSetCovByINPUT(MGM, listOfInput, outputFile,pos,config):
 	listOfCluster	= 	getListOfClusters(MGM,listOfInput)
 	listOfMetrics	=	list(set([edge[0] for edge in MGM.in_edges(listOfCluster) ]))
 	listOfSources	=	[edge[1] for edge in MGM.out_edges(listOfInput) ]
-
+	print('ok')
 	subGraph	=	MGM.subgraph(listOfMetrics+listOfCluster+listOfInput+listOfSources)
 
-	MGMminSetCover(subGraph,outputFile)
+	MGMminSetCover(subGraph,outputFile,pos,config)
 
-	results	=	('With: {} inputs I covered: {} metrics\n\n').format(len(listOfInput), len(listOfMetrics))	
+
+
+
+	results	=	('With: {} initial inputs I covered: {} metrics\n\n').format(len(listOfInput), len(listOfMetrics))	
 	print(results)
 
-def minSetCovBySOURCE(MGM, listOfSources, outputFile, listOfInput=True):
+def minSetCovBySOURCE(MGM, listOfSources, outputFile,pos,config,listOfInput=True):
 	if listOfInput == True:
 		listOfInput		=	list(set([edge[0] for source in listOfSources for edge in MGM.in_edges(source) ]))
 	listOfCluster	=	getListOfClusters(MGM,listOfInput)
@@ -227,9 +269,9 @@ def minSetCovBySOURCE(MGM, listOfSources, outputFile, listOfInput=True):
 	
 	subGraph	=	MGM.subgraph(listOfMetrics+listOfCluster+listOfInput+listOfSources)
 
-	MGMminSetCover(subGraph,outputFile)
+	MGMminSetCover(subGraph,outputFile,pos,config)
 
-def maxSetCovByATTR(MGM,valMax,outputFile,attr):
+def maxSetCovByATTR(MGM,outputFile,valMax,attr,pos,config):
 	listOfInputs				=	[inp for inp in MGM.nodes if 'I' in inp]
 	listOfWeightEdgeAttr		=	nx.get_edge_attributes(MGM, attr)
 
@@ -260,10 +302,9 @@ def maxSetCovByATTR(MGM,valMax,outputFile,attr):
 	listOfCovMetrics	=	list(set([edge[0] for edge in MGM.in_edges(listOfCovCluster) ]))
 
 	subGraph	=	MGM.subgraph(listOfCovMetrics+listOfCovCluster+listOfCovInputs+listOfCovSources)
-	MGMminSetCover(subGraph,outputFile)
-
+	MGMminSetCover(subGraph,outputFile,pos,config)
 	
-def minCapacitySetCover(MGM, outputFile):
+def minCapacitySetCover(MGM, outputFile,pos,config):
 	listOfSources		=	[x for x in MGM.nodes if 'S' in x]
 	listOfInput			=	[x for x in MGM.nodes if 'I' in x]
 
@@ -280,46 +321,7 @@ def minCapacitySetCover(MGM, outputFile):
 
 	listOfCovMinCompSources	=	list(set(listOfCovMinCompSources))
 	
-	minSetCovBySOURCE(MGM, listOfCovMinCompSources, outputFile)
+	minSetCovBySOURCE(MGM, listOfCovMinCompSources, outputFile,pos,config)
 
-def correctnessMGM(MGM,outputFile, catColor=True):
-	wrongCL = set()
-	wrongIN = set()
-	vIN = [node for node in MGM.nodes() if 'I' in node]
-	vM	= [node for node in MGM.nodes() if 'M' in node]
-	vCL = [node for node in MGM.nodes() if 'CL' in node]
-	vSRC = [node for node in MGM.nodes() if 'S' in node]
-
-	for inp in vIN:
-		if MGM.out_degree(inp) == 0:
-			print(inp,MGM.out_degree(inp))
-			wrongIN = wrongIN.union({inp})
-			wrongCL = wrongCL.union(set([edge[0] for edge in MGM.in_edges(inp) ]))
-
-
-
-	for wrong in wrongIN:
-		MGM.remove_node(wrong)
-	for wrong in wrongCL:
-		MGM.remove_node(wrong)
-
-	for mt in vM:
-		if MGM.out_degree(mt) == 0:
-			MGM.remove_node(mt)
-	
-	for cl in vCL:
-		if MGM.in_degree(cl) == 0:
-			MGM.remove_node(cl)
-
-	for inp in vIN:
-		if MGM.in_degree(inp) == 0:
-			MGM.remove_node(inp)
-	
-	for src in vSRC:
-		if MGM.in_degree(src) == 0:
-			MGM.remove_node(src)
-
-	drawGraph(MGM, outputFile, catColor=catColor)
-	return MGM
 	
 	

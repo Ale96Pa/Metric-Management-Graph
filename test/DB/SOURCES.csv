@@ -1,0 +1,39 @@
+S001,https://github.com/firehol/blocklist-ipsets,2,0,2,53
+S002,http://iplists.firehol.org/,2,0,2,43
+S003,https://www.tenable.com/products/nessus,1,0,1,4
+S004,https://github.com/maravento/blackweb,1,0,1,32
+S005,https://www.crowdsec.net,2,2,4,77
+S006,https://www.snort.org/,2,0,2,88
+S007,https://docs.microsoft.com/en-us/troubleshoot/windows-client/performance/determine-hardware-dep-available,3,2,5,50
+S008,https://suricata.io/features/open-source/,2,0,2,85
+S010,https://github.com/paralax/awesome-honeypots,3,0,3,97
+S011,https://siemonster.com/,3,2,5,73
+S012,https://www.ossec.net/,2,0,2,62
+S013,penetration test report COMPANY,3,2,5,83
+S014,https://www.zerodayinitiative.com/advisories/published/,2,0,2,6
+S016,paper solution,3,2,5,21
+S017,make ASWatch with AS configuration from paper,3,0,3,49
+S018,spreadsheet with overall cyber-security costs,2,2,4,29
+S019,spreadsheet with investment estimation,3,2,5,87
+S020,https://github.com/danielmiessler/SecLists,2,0,2,63
+S021,patch mangment software: https://www.pdq.com/pricing/,3,2,5,92
+S022,spreadsheet with vulnerabilities cvss,2,0,2,70
+S023,paper tool implementation,3,2,5,39
+S024,https://github.com/maravento/blackip,2,0,2,44
+S025,https://www.projecthoneypot.org/list_of_ips.php,1,0,1,68
+S026,https://aws.amazon.com/it/guardduty/,3,2,5,52
+S027,https://docs.microsoft.com/it-it/azure/firewall/premium-features,3,2,5,4
+S028,https://www.geeksforgeeks.org/draw-control-flow-graph-using-pycfg-python/,2,2,4,54
+S029,https://www.ibm.com/it-it/qradar/security-qradar-siem,3,2,5,73
+S030,https://logrhythm.com/,3,2,5,38
+S031,https://www.splunk.com/,2,2,4,1
+S032,spreadsheet with utilization monitoring CPU RAM etc,3,2,5,10
+S033,spreadsheet with result of benchmark IDS/IPS tools,3,2,5,31
+S034,https://www.manageengine.com/products/firewall/firewall-rule-management.html,2,2,4,57
+S035,https://www.nirsoft.net/utils/network_route_view.html,2,0,2,18
+S036,https://www.envoyproxy.io/docs/envoy/latest/operations/tools/route_table_check_tool,1,0,1,27
+S037,https://www.solarwinds.com/network-topology-mapper,3,2,5,53
+S038,https://nmap.org/,2,0,2,26
+S039,https://www.sonarqube.org/,2,2,4,19
+S040,https://www.microfocus.com/it-it/products/static-code-analysis-sast/overview,3,2,5,86
+S041,https://www.hcltechsw.com/it/products/appscan/,2,2,4,85

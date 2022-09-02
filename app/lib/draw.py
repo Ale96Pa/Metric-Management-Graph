@@ -2,21 +2,21 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import scipy as sp
-from lib.parser import fromNetxToCyTo
+from app.lib.parser import fromNetxToCyTo
 
 import configparser
-from lib.position import pos
-
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-categories		= 	config['GRAPH']['categories'].split(',')
-categoryColors	=	config['GRAPH']['categoryColors'].split(',')
 
 
 
-def drawGraph(G,outputFileName,pos=pos,catColor=False,saveFig=True,show=False,fontSize=5,nodeSize=400):
-	fromNetxToCyTo(G,outputFileName.split('.')[0]+'.json')
+
+def drawGraph(G,outputFileName,pos,config,catColor=False,saveFig=True,show=False,fontSize=5,nodeSize=400):
+
+	categories		= 	config['GRAPH']['categories'].split(',')
+	categoryColors	=	config['GRAPH']['categoryColors'].split(',')
+
+
+	fromNetxToCyTo(G,outputFileName.split('.')[0]+'.json',pos)
+	
 	plt.figure(figsize=(21,30), frameon=False)
 
 	options = {
@@ -27,6 +27,7 @@ def drawGraph(G,outputFileName,pos=pos,catColor=False,saveFig=True,show=False,fo
 		"linewidths": 1,
 		"width": 1
 	}
+	
 	
 	nx.draw_networkx(G, pos, **options)
 	

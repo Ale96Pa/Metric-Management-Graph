@@ -1,7 +1,6 @@
 import csv
 import networkx as nx
 import json
-from lib.position import pos
 
 
 def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
@@ -34,7 +33,7 @@ def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
 	return G
 	#return a graph object
 
-def fromNetxToCyTo(G,outfileName, pos=pos):
+def fromNetxToCyTo(G,outfileName, pos):
 	jsonGrpah = nx.cytoscape_data(G) 
 	cc = 1
 	for xx in jsonGrpah['elements']['nodes']:

@@ -2,11 +2,9 @@ import networkx as nx
 import random
 			
 
-def genPosNodes(G,delta,pos,filePosName):
+def genPosNodes(G,delta,pos):
 	print('Start the positioning of nodes according to AS algo')
-	f = open(filePosName, "w")
-	f.write('pos = {\n')
-	
+	d = {}
 	find = 0
 	i=1
 	for el in G.nodes:
@@ -27,20 +25,14 @@ def genPosNodes(G,delta,pos,filePosName):
 			pos.pop(0)
 		
 		aaaa=str((i*4)+((i-1)*delta[0]))
-		posizione="'{}': ({}, {}),\n".format(str(el),str(pos[0]),aaaa)
-		if el == list(G.nodes)[-1]:
-			posizione="'{}': ({}, {})\n}}".format(str(el),str(pos[0]),aaaa)
-		print(posizione)
-		f.write(posizione)
+		d[str(el)] = (int(pos[0]),int(aaaa))
 
 		i+=1
 
 
-
-	#f.write("'NULLO': (55, 210)\n}")
-	f.close()
+	print(d)
 	print('END - the positioning of nodes')
-
+	return d
 
 def makeSubGraphByMetrics(MGM,listOfMetrics):
 

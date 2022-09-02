@@ -1,0 +1,61 @@
+M001,Defense Metrics,Reaction time metric
+M002,Defense Metrics,Coverage metric
+M003,Defense Metrics,Coverage DEP metric
+M004,Defense Metrics,Average indirect target reduction
+M005,Defense Metrics,Average target size
+M006,Defense Metrics,Evasion resistance 
+M007,Defense Metrics,Coverage metric 
+M008,Defense Metrics,Redundancy metric 
+M009,Defense Metrics,Confidence metric 
+M010,Defense Metrics,Cost metric 
+M011,Defense Metrics,Detection time 
+M012,Defense Metrics,Intrusion detection metrics 
+M013,Defense Metrics,Relative Strength of Defense Mechanisms
+M014,Defense Metrics,Colletive Strength of Defense Mechanisms
+M015,Defense Metrics,Entropy metric 
+M016,Defense Metrics,Effective entropy metric 
+M017,Defense Metrics,Moving Target Defense 
+M018,Defense Metrics,Penetration resistance 
+M019,Defense Metrics,Network diversity 
+M020,Attack Metrics,Lifetime of zero-day attacks 
+M021,Attack Metrics,Victims by zero-day attacks 
+M022,Attack Metrics,Targeted threat index 
+M023,Attack Metrics,Botnet size 
+M024,Attack Metrics,Network bandwidth 
+M025,Attack Metrics,Botnet efficiency 
+M026,Attack Metrics,Botnet robustness 
+M027,Attack Metrics,Infection rate
+M028,Attack Metrics,Adversarial Machine Learning Attacks 
+M029,Attack Metrics,Obfuscation prevalence metric 
+M030,Attack Metrics,Structural complexity metric 
+M031,Situation Metrics,Network maliciousness metric 
+M032,Situation Metrics,Rogue network metric 
+M033,Situation Metrics,ISP badness metric 
+M034,Situation Metrics,Control-plane reputation metric 
+M035,Situation Metrics,Cybersecurity posture metric 
+M036,Situation Metrics,Fraction of compromised computers 
+M037,Situation Metrics,Probability a computer is compromised at time t 
+M038,Situation Metrics,Encounter rate 
+M039,Situation Metrics,Incident rate 
+M040,Situation Metrics,Blocking rate 
+M041,Situation Metrics,Breach frequency metric 
+M042,Situation Metrics,Breach size metric 
+M043,Situation Metrics,Time-between-incidents metric 
+M044,Situation Metrics,Time-to-first-compromise metric 
+M045,Situation Metrics,Delay in incident detection 
+M046,Situation Metrics,Cost of incidents 
+M047,Situation Metrics,Security spending 
+M048,Situation Metrics,Security budget allocation 
+M049,Situation Metrics,Return on security investment 
+M050,Situation Metrics,Net present value 
+M051,Vulnerability Metrics,Measuring Phishing Susceptibility 
+M052,Vulnerability Metrics,Measuring Malware Susceptibility 
+M053,Vulnerability Metrics,Password guessability metrics 
+M054,Vulnerability Metrics,Password meter metrics 
+M055,Vulnerability Metrics,Interface-Induced Susceptibility
+M056,Vulnerability Metrics,Metrics for measuring the evolution of vulnerabilities
+M057,Vulnerability Metrics,Metrics for measuring vulnerability lifetime 
+M058,Vulnerability Metrics,Measuring Severity of Individual Software Vulnerabilities 
+M059,Vulnerability Metrics,Deterministic Severity Metrics 
+M060,Vulnerability Metrics,Effort metrics 
+M061,Vulnerability Metrics,Probabilistic Severity Metrics 

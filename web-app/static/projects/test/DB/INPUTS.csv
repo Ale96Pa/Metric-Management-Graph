@@ -1,0 +1,35 @@
+I001,blacklist ip
+I002,cve list
+I003,black-list domain
+I004,malware ip list
+I005,IPS
+I006,memory computer hardware
+I007,Control-Flow Graph (CFG) of an application
+I008,IDS
+I009,HONEYPOT
+I010,SIEM
+I011,monitoring utilization
+I012,HIDS
+I013,Penetration test report
+I015,zero-day list
+I016,cve list LINKED to HOST
+I017,zero-day list LINKED to HOST
+I018,check malicious APT mails
+I019,botnet list and informations
+I020,Adversarial Machine Learning Attacks assessment tools
+I021,malware list and ubfuscation data
+I022,drive by downloand malicious site
+I023,phishing sites
+I024,buy paper solution
+I025,make ASWatch with AS configurations
+I026,spreadsheet with overall cyber-security costs
+I027,spreadsheet with investment estimation
+I030,password list
+I031,software code
+I032,check sw patching
+I033,spreadsheet with vulnerabilities cvss
+I034,paper tool implementation
+I035,benchmark detection/prevention tools
+I036,get firewall rules
+I037,get routing table
+I038,get network topology
