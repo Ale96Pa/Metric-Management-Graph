@@ -7,6 +7,9 @@ from app.lib.parser import fromNetxToCyTo
 import configparser
 
 
+mpl.use('Agg')
+
+
 
 
 def drawGraph(G,outputFileName,pos,config,catColor=False,saveFig=True,show=False,fontSize=5,nodeSize=400):

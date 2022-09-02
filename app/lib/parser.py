@@ -36,10 +36,18 @@ def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
 def fromNetxToCyTo(G,outfileName, pos):
 	jsonGrpah = nx.cytoscape_data(G) 
 	cc = 1
+	state = 0
 	for xx in jsonGrpah['elements']['nodes']:
 		iid = xx['data']['id']
-		if 'M001' == iid or 'CL001' == iid or 'I001' == iid or 'I001' == iid or 'S001' == iid:
+		if  'CL' in iid and state == 0:
 			cc=1
+			state = 1
+		if  'I' in iid and state == 1:
+			cc=1
+			state = 2
+		if  'S' in iid and state == 2:
+			cc=1
+			state = 3
 		if 'M' in iid:
 			x = pos[iid][0]+(100)
 			y = pos[iid][1]+(50*cc)

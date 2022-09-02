@@ -80,10 +80,14 @@
                 List of Project
             </div>
             {% for project in listOfProject %}
-            <li class="nav-item">
+            {% if projectName==project %}
+                <li class="nav-item active">
+                {% else %}
+                <li class="nav-item">
+                {% endif %}
                 <a class="nav-link" href="/project/{{project}}">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>{{ project }}</span></a>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>{{ project }}</span></a>
             </li>
             {% endfor %}
 
@@ -102,11 +106,58 @@
 
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
-                          <li class="nav-item">
-                            <a class="nav-link"  href="#">Correctness</a>
+                            {% if func=='main' %}
+                            <li class="nav-item" style="font-weight: bold;">
+                           <a class="nav-link" style="color: black;"  href="/project/{{project}}">Graph</a>
+                           </li>
+                           {% else %}
+                           <li class="nav-item">
+                           <a class="nav-link"  href="#">Graph</a>
+                            </li>
+                           {% endif %}
+
+                          {% if func=='id1' %}
+                             <li class="nav-item" style="font-weight: bold;">
+                            <a class="nav-link" style="color: black;"  href="?f=id1">Min-Set-Cover</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                            <a class="nav-link"  href="?f=id1">Min-Set-Cover</a>
+                             </li>
+                            {% endif %}
+
+                            {% if func=='id2' %}
+                            <li class="nav-item" style="font-weight: bold;">
+                           <a class="nav-link" style="color: black;"  href="?f=id2&c=15">Cost of Source in GET Set-Cover</a>
+                           </li>
+                           {% else %}
+                           <li class="nav-item">
+                           <a class="nav-link"  href="?f=id2&c=15">Cost of Source in GET Set-Cover</a>
+                            </li>
+                           {% endif %}
+
+                           {% if func=='id3' %}
+                           <li class="nav-item" style="font-weight: bold;">
+                          <a class="nav-link" style="color: black;"  href="?f=id3">Min Computational Capacity Set Cover</a>
                           </li>
+                          {% else %}
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Min-Set-Cover</a>
+                          <a class="nav-link"  href="?f=id3">Min Computational Capacity Set Cover</a>
+                           </li>
+                          {% endif %}
+
+                          {% if func=='minSetCovByMetric' %}
+                           <li class="nav-item" style="font-weight: bold;">
+                          <a class="nav-link" style="color: black;"  href="?f=minSetCovByMetric">Min-Set-Cover By Metrics</a>
+                          </li>
+                          {% else %}
+                          <li class="nav-item">
+                          <a class="nav-link"  href="?f=minSetCovByMetric">Min-Set-Cover By Metrics</a>
+                           </li>
+                          {% endif %}
+                         
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"></a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="#"></a>
@@ -160,6 +211,13 @@
 
 
     <script>
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
+        }
 		var cy = cytoscape({
 
 		container: document.getElementById('cy'), // container to render in
@@ -169,7 +227,7 @@
 		{
 			selector: 'node',
 			style: {
-			'background-color': '#666',
+			'background-color': '#000',
 			'label': 'data(id)'
 			}
 		},
@@ -178,8 +236,8 @@
 			selector: 'edge',
 			style: {
 			'width': 1,
-			'line-color': '#ccc',
-			'target-arrow-color': '#ccc',
+			'line-color': '#000',
+			'target-arrow-color': '#000',
 			'target-arrow-shape': 'triangle',
 			'curve-style': 'bezier'
 			}
@@ -191,6 +249,20 @@
 		var jsonGrpah = $.getJSON("{{ url_for('static', filename=projectNameFile) }}", function(data){
 		
 			cy.add(cy.json(data));
+            firstelem = cy.nodes()[1]['_private']['data']['id']
+            lastElem  = cy.nodes()[cy.nodes().length - 2]['_private']['data']['id']
+
+           
+            
+            var jsonGrpah2 = $.getJSON("{{ url_for('static', filename=projectNameFileNew) }}", function(data){
+                cy.add(cy.json(data));
+                cy.animate({
+                     pan: { x: 150, y: 100 },
+                        zoom: 1
+                        }, {
+                        duration: 2000
+                        });
+            });
 		});
 	
 
