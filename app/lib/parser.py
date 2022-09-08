@@ -10,11 +10,11 @@ def getGraphFromCSV(fileNodes,fileEdges,fileGraphName):
 			csvreader = csv.reader(db)
 			for row in csvreader:
 				if 'M' in row[0]:
-					G.add_node(row[0], category=row[1])
+					G.add_node(row[0], category=row[1], name=row[2])
 				if 'S' in row[0]:
-					G.add_node(row[0], computation=row[5])
-				else:
-					G.add_node(row[0])
+					G.add_node(row[0], computation=row[5], name=row[1])
+				elif 'I' in row[0]:
+					G.add_node(row[0], name=row[1])
 
 	
 	for file in fileEdges:
@@ -39,20 +39,20 @@ def fromNetxToCyTo(G,outfileName, pos):
 	state = 0
 	for xx in jsonGrpah['elements']['nodes']:
 		iid = xx['data']['id']
-		if  'CL' in iid and state == 0:
+		if  'I' in iid and state == 0:
 			cc=1
 			state = 1
-		if  'I' in iid and state == 1:
+		if  'S' in iid and state == 1:
 			cc=1
 			state = 2
-		if  'S' in iid and state == 2:
+		if  'CL' in iid and state == 2:
 			cc=1
 			state = 3
 		if 'M' in iid:
 			x = pos[iid][0]+(100)
 			y = pos[iid][1]+(50*cc)
 			cc+= 1
-		elif 'C' in iid:
+		elif 'CL' in iid:
 			x = pos[iid][0]+(400)
 			y = pos[iid][1]+(100*cc)
 			cc+=1

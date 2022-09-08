@@ -22,11 +22,19 @@
 
     <style>
 		#cy {
-		max-width: 1300px;
+		width: 80%;
 		height: 4000px;
 		display: block;
         border-style: solid;
+
 		}
+        #nodes{
+            width: 20%;
+            background-color: white;
+            height: 100%;
+            padding: 20px;
+        }
+
 	</style>
 
     <script src="{{ url_for('static',filename='js/cytoscape.min-3.22.1.js') }}"></script>
@@ -172,9 +180,16 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" id="cy">
+                <div class="row">
+                    <div class="coll" id="nodes">No selected nodes</div>
+                    <div class="coll" id="cy"></div>
 
                 </div>
+               
+
+                
+                            
+                
                 <!-- /.container-fluid -->
 
             </div>
@@ -211,48 +226,105 @@
 
 
     <script>
-        function sleep(milliseconds) {
-            const date = Date.now();
-            let currentDate = null;
-            do {
-                currentDate = Date.now();
-            } while (currentDate - date < milliseconds);
-        }
+
 		var cy = cytoscape({
 
 		container: document.getElementById('cy'), // container to render in
 
+        
 
-		style: [ // the stylesheet for the graph
-		{
-			selector: 'node',
-			style: {
-			'background-color': '#000',
-			'label': 'data(id)'
-			}
-		},
+        boxSelectionEnabled: true,
+        autounselectify: true,
 
-		{
-			selector: 'edge',
-			style: {
-			'width': 1,
-			'line-color': '#000',
-			'target-arrow-color': '#000',
-			'target-arrow-shape': 'triangle',
-			'curve-style': 'bezier'
-			}
-		}
-		]
+        style: cytoscape.stylesheet()
+            .selector('node')
+            .style({
+                'content': 'data(name)',
+                'background-color': '#000',
+                'type': 'rectangle'
+            })
+            .selector('edge')
+            .style({
+                'content': 'data(weight)',
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle',
+                'width': 0.5,
+                'line-color': '#000',
+                'target-arrow-color': '#000'
+            })
+            .selector('.bluenode')
+            .style({
+                'background-color': '#6161fc',
+                'line-color': '#6161fc',
+                'target-arrow-color': '#6161fc',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.rednode')
+            .style({
+                'background-color': '#fc6161',
+                'line-color': '#fc6161',
+                'target-arrow-color': '#fc6161',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.greennode')
+            .style({
+                'background-color': '#66fc61',
+                'line-color': '#66fc61',
+                'target-arrow-color': '#66fc61',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.violetnode')
+            .style({
+                'background-color': '#d861fc',
+                'line-color': '#d861fc',
+                'target-arrow-color': '#d861fc',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.selected')
+            .style({
+                'background-color': '#b80000',
+                'line-color': '#b80000',
+                'target-arrow-color': '#b80000',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            
+
 
 		});
        
 		var jsonGrpah = $.getJSON("{{ url_for('static', filename=projectNameFile) }}", function(data){
 		
 			cy.add(cy.json(data));
-            firstelem = cy.nodes()[1]['_private']['data']['id']
-            lastElem  = cy.nodes()[cy.nodes().length - 2]['_private']['data']['id']
-
-           
+            elems = cy.nodes()[1]['_private']['data']['name']
+        
+            cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('bluenode')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('rednode')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('greennode')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('violetnode')
+                        }
+                    } 
+                    
+                });
+            });
             
             var jsonGrpah2 = $.getJSON("{{ url_for('static', filename=projectNameFileNew) }}", function(data){
                 cy.add(cy.json(data));
@@ -264,6 +336,41 @@
                         });
             });
 		});
+        cy.autounselectify(false);
+        
+        selectedElem = []
+
+        cy.on('click', 'node', function (evt) {
+            iid = '#'+evt.target.id()
+            	
+            classes =  cy.$(iid).classes()
+            if(classes.includes('selected')){
+                cy.$(iid).removeClass('selected')
+                var index = selectedElem.indexOf(evt.target.id());
+                if (index !== -1) {
+                    selectedElem.splice(index, 1);
+                }
+            }else{
+                cy.$(iid).addClass('selected')
+                selectedElem.push(evt.target.id())
+            }
+        updateHTML(selectedElem)
+        console.log(selectedElem)
+    });
+
+    function updateHTML(selectedElem){
+        text = 'The Selected node are:<br>'
+        selectedElem.forEach(element => {
+
+            text = text + element+';<br>'
+        });
+        console.log(text)
+        $('#nodes').html(text)
+    }
+    
+
+
+    
 	
 
 	</script>

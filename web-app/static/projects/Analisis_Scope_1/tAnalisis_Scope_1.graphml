@@ -1,0 +1,829 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d3" for="edge" attr.name="weight" attr.type="long"/>
+<key id="d2" for="node" attr.name="computation" attr.type="string"/>
+<key id="d1" for="node" attr.name="name" attr.type="string"/>
+<key id="d0" for="node" attr.name="category" attr.type="string"/>
+<graph edgedefault="directed"><node id="M001">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Reaction time metric</data>
+</node>
+<node id="M002">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Coverage metric</data>
+</node>
+<node id="M003">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Coverage DEP metric</data>
+</node>
+<node id="M004">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Average indirect target reduction</data>
+</node>
+<node id="M005">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Average target size</data>
+</node>
+<node id="M006">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Evasion resistance </data>
+</node>
+<node id="M007">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Coverage metric </data>
+</node>
+<node id="M008">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Redundancy metric </data>
+</node>
+<node id="M009">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Confidence metric </data>
+</node>
+<node id="M010">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Cost metric </data>
+</node>
+<node id="M011">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Detection time </data>
+</node>
+<node id="M012">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Intrusion detection metrics </data>
+</node>
+<node id="M013">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Relative Strength of Defense Mechanisms</data>
+</node>
+<node id="M014">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Colletive Strength of Defense Mechanisms</data>
+</node>
+<node id="M015">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Entropy metric </data>
+</node>
+<node id="M016">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Effective entropy metric </data>
+</node>
+<node id="M017">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Moving Target Defense </data>
+</node>
+<node id="M018">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Penetration resistance </data>
+</node>
+<node id="M019">
+  <data key="d0">Defense Metrics</data>
+  <data key="d1">Network diversity </data>
+</node>
+<node id="M020">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Lifetime of zero-day attacks </data>
+</node>
+<node id="M021">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Victims by zero-day attacks </data>
+</node>
+<node id="M022">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Targeted threat index </data>
+</node>
+<node id="M023">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Botnet size </data>
+</node>
+<node id="M024">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Network bandwidth </data>
+</node>
+<node id="M025">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Botnet efficiency </data>
+</node>
+<node id="M026">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Botnet robustness </data>
+</node>
+<node id="M027">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Infection rate</data>
+</node>
+<node id="M028">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Adversarial Machine Learning Attacks </data>
+</node>
+<node id="M029">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Obfuscation prevalence metric </data>
+</node>
+<node id="M030">
+  <data key="d0">Attack Metrics</data>
+  <data key="d1">Structural complexity metric </data>
+</node>
+<node id="M031">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Network maliciousness metric </data>
+</node>
+<node id="M032">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Rogue network metric </data>
+</node>
+<node id="M033">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">ISP badness metric </data>
+</node>
+<node id="M034">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Control-plane reputation metric </data>
+</node>
+<node id="M035">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Cybersecurity posture metric </data>
+</node>
+<node id="M036">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Fraction of compromised computers </data>
+</node>
+<node id="M037">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Probability a computer is compromised at time t </data>
+</node>
+<node id="M038">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Encounter rate </data>
+</node>
+<node id="M039">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Incident rate </data>
+</node>
+<node id="M040">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Blocking rate </data>
+</node>
+<node id="M041">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Breach frequency metric </data>
+</node>
+<node id="M042">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Breach size metric </data>
+</node>
+<node id="M043">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Time-between-incidents metric </data>
+</node>
+<node id="M044">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Time-to-first-compromise metric </data>
+</node>
+<node id="M045">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Delay in incident detection </data>
+</node>
+<node id="M046">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Cost of incidents </data>
+</node>
+<node id="M047">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Security spending </data>
+</node>
+<node id="M048">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Security budget allocation </data>
+</node>
+<node id="M049">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Return on security investment </data>
+</node>
+<node id="M050">
+  <data key="d0">Situation Metrics</data>
+  <data key="d1">Net present value </data>
+</node>
+<node id="M051">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Measuring Phishing Susceptibility </data>
+</node>
+<node id="M052">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Measuring Malware Susceptibility </data>
+</node>
+<node id="M053">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Password guessability metrics </data>
+</node>
+<node id="M054">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Password meter metrics </data>
+</node>
+<node id="M055">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Interface-Induced Susceptibility</data>
+</node>
+<node id="M056">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Metrics for measuring the evolution of vulnerabilities</data>
+</node>
+<node id="M057">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Metrics for measuring vulnerability lifetime </data>
+</node>
+<node id="M058">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Measuring Severity of Individual Software Vulnerabilities </data>
+</node>
+<node id="M059">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Deterministic Severity Metrics </data>
+</node>
+<node id="M060">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Effort metrics </data>
+</node>
+<node id="M061">
+  <data key="d0">Vulnerability Metrics</data>
+  <data key="d1">Probabilistic Severity Metrics </data>
+</node>
+<node id="I001">
+  <data key="d1">blacklist ip</data>
+</node>
+<node id="I002">
+  <data key="d1">cve list</data>
+</node>
+<node id="I003">
+  <data key="d1">black-list domain</data>
+</node>
+<node id="I004">
+  <data key="d1">malware ip list</data>
+</node>
+<node id="I005">
+  <data key="d1">IPS</data>
+</node>
+<node id="I006">
+  <data key="d1">memory computer hardware</data>
+</node>
+<node id="I007">
+  <data key="d1">Control-Flow Graph (CFG) of an application</data>
+</node>
+<node id="I008">
+  <data key="d1">IDS</data>
+</node>
+<node id="I009">
+  <data key="d1">HONEYPOT</data>
+</node>
+<node id="I010">
+  <data key="d1">SIEM</data>
+</node>
+<node id="I011">
+  <data key="d1">monitoring utilization</data>
+</node>
+<node id="I012">
+  <data key="d1">HIDS</data>
+</node>
+<node id="I013">
+  <data key="d1">Penetration test report</data>
+</node>
+<node id="I015">
+  <data key="d1">zero-day list</data>
+</node>
+<node id="I016">
+  <data key="d1">cve list LINKED to HOST</data>
+</node>
+<node id="I017">
+  <data key="d1">zero-day list LINKED to HOST</data>
+</node>
+<node id="I018">
+  <data key="d1">check malicious APT mails</data>
+</node>
+<node id="I019">
+  <data key="d1">botnet list and informations</data>
+</node>
+<node id="I020">
+  <data key="d1">Adversarial Machine Learning Attacks assessment tools</data>
+</node>
+<node id="I021">
+  <data key="d1">malware list and ubfuscation data</data>
+</node>
+<node id="I022">
+  <data key="d1">drive by downloand malicious site</data>
+</node>
+<node id="I023">
+  <data key="d1">phishing sites</data>
+</node>
+<node id="I024">
+  <data key="d1">buy paper solution</data>
+</node>
+<node id="I025">
+  <data key="d1">make ASWatch with AS configurations</data>
+</node>
+<node id="I026">
+  <data key="d1">spreadsheet with overall cyber-security costs</data>
+</node>
+<node id="I027">
+  <data key="d1">spreadsheet with investment estimation</data>
+</node>
+<node id="I030">
+  <data key="d1">password list</data>
+</node>
+<node id="I031">
+  <data key="d1">software code</data>
+</node>
+<node id="I032">
+  <data key="d1">check sw patching</data>
+</node>
+<node id="I033">
+  <data key="d1">spreadsheet with vulnerabilities cvss</data>
+</node>
+<node id="I034">
+  <data key="d1">paper tool implementation</data>
+</node>
+<node id="I035">
+  <data key="d1">benchmark detection/prevention tools</data>
+</node>
+<node id="I036">
+  <data key="d1">get firewall rules</data>
+</node>
+<node id="I037">
+  <data key="d1">get routing table</data>
+</node>
+<node id="I038">
+  <data key="d1">get network topology</data>
+</node>
+<node id="S001">
+  <data key="d2">53</data>
+  <data key="d1">https://github.com/firehol/blocklist-ipsets</data>
+</node>
+<node id="S002">
+  <data key="d2">43</data>
+  <data key="d1">http://iplists.firehol.org/</data>
+</node>
+<node id="S003">
+  <data key="d2">4</data>
+  <data key="d1">https://www.tenable.com/products/nessus</data>
+</node>
+<node id="S004">
+  <data key="d2">32</data>
+  <data key="d1">https://github.com/maravento/blackweb</data>
+</node>
+<node id="S005">
+  <data key="d2">77</data>
+  <data key="d1">https://www.crowdsec.net</data>
+</node>
+<node id="S006">
+  <data key="d2">88</data>
+  <data key="d1">https://www.snort.org/</data>
+</node>
+<node id="S007">
+  <data key="d2">50</data>
+  <data key="d1">https://docs.microsoft.com/en-us/troubleshoot/windows-client/performance/determine-hardware-dep-available</data>
+</node>
+<node id="S008">
+  <data key="d2">85</data>
+  <data key="d1">https://suricata.io/features/open-source/</data>
+</node>
+<node id="S010">
+  <data key="d2">97</data>
+  <data key="d1">https://github.com/paralax/awesome-honeypots</data>
+</node>
+<node id="S011">
+  <data key="d2">73</data>
+  <data key="d1">https://siemonster.com/</data>
+</node>
+<node id="S012">
+  <data key="d2">62</data>
+  <data key="d1">https://www.ossec.net/</data>
+</node>
+<node id="S013">
+  <data key="d2">83</data>
+  <data key="d1">penetration test report COMPANY</data>
+</node>
+<node id="S014">
+  <data key="d2">6</data>
+  <data key="d1">https://www.zerodayinitiative.com/advisories/published/</data>
+</node>
+<node id="S016">
+  <data key="d2">21</data>
+  <data key="d1">paper solution</data>
+</node>
+<node id="S017">
+  <data key="d2">49</data>
+  <data key="d1">make ASWatch with AS configuration from paper</data>
+</node>
+<node id="S018">
+  <data key="d2">29</data>
+  <data key="d1">spreadsheet with overall cyber-security costs</data>
+</node>
+<node id="S019">
+  <data key="d2">87</data>
+  <data key="d1">spreadsheet with investment estimation</data>
+</node>
+<node id="S020">
+  <data key="d2">63</data>
+  <data key="d1">https://github.com/danielmiessler/SecLists</data>
+</node>
+<node id="S021">
+  <data key="d2">92</data>
+  <data key="d1">patch mangment software: https://www.pdq.com/pricing/</data>
+</node>
+<node id="S022">
+  <data key="d2">70</data>
+  <data key="d1">spreadsheet with vulnerabilities cvss</data>
+</node>
+<node id="S023">
+  <data key="d2">39</data>
+  <data key="d1">paper tool implementation</data>
+</node>
+<node id="S024">
+  <data key="d2">44</data>
+  <data key="d1">https://github.com/maravento/blackip</data>
+</node>
+<node id="S025">
+  <data key="d2">68</data>
+  <data key="d1">https://www.projecthoneypot.org/list_of_ips.php</data>
+</node>
+<node id="S026">
+  <data key="d2">52</data>
+  <data key="d1">https://aws.amazon.com/it/guardduty/</data>
+</node>
+<node id="S027">
+  <data key="d2">4</data>
+  <data key="d1">https://docs.microsoft.com/it-it/azure/firewall/premium-features</data>
+</node>
+<node id="S028">
+  <data key="d2">54</data>
+  <data key="d1">https://www.geeksforgeeks.org/draw-control-flow-graph-using-pycfg-python/</data>
+</node>
+<node id="S029">
+  <data key="d2">73</data>
+  <data key="d1">https://www.ibm.com/it-it/qradar/security-qradar-siem</data>
+</node>
+<node id="S030">
+  <data key="d2">38</data>
+  <data key="d1">https://logrhythm.com/</data>
+</node>
+<node id="S031">
+  <data key="d2">1</data>
+  <data key="d1">https://www.splunk.com/</data>
+</node>
+<node id="S032">
+  <data key="d2">10</data>
+  <data key="d1">spreadsheet with utilization monitoring CPU RAM etc</data>
+</node>
+<node id="S033">
+  <data key="d2">31</data>
+  <data key="d1">spreadsheet with result of benchmark IDS/IPS tools</data>
+</node>
+<node id="S034">
+  <data key="d2">57</data>
+  <data key="d1">https://www.manageengine.com/products/firewall/firewall-rule-management.html</data>
+</node>
+<node id="S035">
+  <data key="d2">18</data>
+  <data key="d1">https://www.nirsoft.net/utils/network_route_view.html</data>
+</node>
+<node id="S036">
+  <data key="d2">27</data>
+  <data key="d1">https://www.envoyproxy.io/docs/envoy/latest/operations/tools/route_table_check_tool</data>
+</node>
+<node id="S037">
+  <data key="d2">53</data>
+  <data key="d1">https://www.solarwinds.com/network-topology-mapper</data>
+</node>
+<node id="S038">
+  <data key="d2">26</data>
+  <data key="d1">https://nmap.org/</data>
+</node>
+<node id="S039">
+  <data key="d2">19</data>
+  <data key="d1">https://www.sonarqube.org/</data>
+</node>
+<node id="S040">
+  <data key="d2">86</data>
+  <data key="d1">https://www.microfocus.com/it-it/products/static-code-analysis-sast/overview</data>
+</node>
+<node id="S041">
+  <data key="d2">85</data>
+  <data key="d1">https://www.hcltechsw.com/it/products/appscan/</data>
+</node>
+<node id="CL001"/>
+<node id="CL002"/>
+<node id="CL003"/>
+<node id="CL004"/>
+<node id="CL005"/>
+<node id="CL006"/>
+<node id="CL007"/>
+<node id="CL008"/>
+<node id="CL009"/>
+<node id="CL010"/>
+<node id="CL011"/>
+<node id="CL031"/>
+<node id="CL013"/>
+<node id="CL014"/>
+<node id="CL015"/>
+<node id="CL016"/>
+<node id="CL017"/>
+<node id="CL018"/>
+<node id="CL019"/>
+<node id="CL020"/>
+<node id="CL021"/>
+<node id="CL022"/>
+<node id="CL023"/>
+<node id="CL030"/>
+<node id="CL024"/>
+<node id="CL025"/>
+<node id="CL026"/>
+<node id="CL027"/>
+<node id="CL028"/>
+<node id="CL029"/>
+<edge source="M001" target="CL001"/>
+<edge source="M002" target="CL001"/>
+<edge source="M003" target="CL002"/>
+<edge source="M004" target="CL003"/>
+<edge source="M005" target="CL003"/>
+<edge source="M006" target="CL003"/>
+<edge source="M007" target="CL004"/>
+<edge source="M007" target="CL005"/>
+<edge source="M008" target="CL004"/>
+<edge source="M008" target="CL005"/>
+<edge source="M009" target="CL004"/>
+<edge source="M009" target="CL005"/>
+<edge source="M010" target="CL006"/>
+<edge source="M010" target="CL007"/>
+<edge source="M011" target="CL008"/>
+<edge source="M012" target="CL005"/>
+<edge source="M013" target="CL009"/>
+<edge source="M013" target="CL010"/>
+<edge source="M014" target="CL009"/>
+<edge source="M014" target="CL010"/>
+<edge source="M015" target="CL002"/>
+<edge source="M016" target="CL002"/>
+<edge source="M018" target="CL011"/>
+<edge source="M019" target="CL031"/>
+<edge source="M020" target="CL013"/>
+<edge source="M021" target="CL013"/>
+<edge source="M022" target="CL014"/>
+<edge source="M023" target="CL015"/>
+<edge source="M024" target="CL015"/>
+<edge source="M025" target="CL015"/>
+<edge source="M026" target="CL015"/>
+<edge source="M027" target="CL004"/>
+<edge source="M027" target="CL005"/>
+<edge source="M027" target="CL016"/>
+<edge source="M027" target="CL008"/>
+<edge source="M028" target="CL017"/>
+<edge source="M029" target="CL018"/>
+<edge source="M030" target="CL018"/>
+<edge source="M031" target="CL001"/>
+<edge source="M032" target="CL019"/>
+<edge source="M033" target="CL004"/>
+<edge source="M033" target="CL005"/>
+<edge source="M033" target="CL016"/>
+<edge source="M034" target="CL020"/>
+<edge source="M035" target="CL021"/>
+<edge source="M036" target="CL004"/>
+<edge source="M036" target="CL005"/>
+<edge source="M036" target="CL016"/>
+<edge source="M037" target="CL004"/>
+<edge source="M037" target="CL005"/>
+<edge source="M037" target="CL016"/>
+<edge source="M038" target="CL004"/>
+<edge source="M038" target="CL005"/>
+<edge source="M038" target="CL016"/>
+<edge source="M039" target="CL004"/>
+<edge source="M039" target="CL005"/>
+<edge source="M039" target="CL016"/>
+<edge source="M040" target="CL005"/>
+<edge source="M040" target="CL016"/>
+<edge source="M041" target="CL004"/>
+<edge source="M041" target="CL005"/>
+<edge source="M041" target="CL016"/>
+<edge source="M042" target="CL016"/>
+<edge source="M042" target="CL005"/>
+<edge source="M043" target="CL004"/>
+<edge source="M043" target="CL005"/>
+<edge source="M043" target="CL016"/>
+<edge source="M044" target="CL005"/>
+<edge source="M045" target="CL005"/>
+<edge source="M045" target="CL016"/>
+<edge source="M046" target="CL022"/>
+<edge source="M047" target="CL022"/>
+<edge source="M048" target="CL022"/>
+<edge source="M049" target="CL022"/>
+<edge source="M050" target="CL023"/>
+<edge source="M051" target="CL030"/>
+<edge source="M052" target="CL001"/>
+<edge source="M053" target="CL024"/>
+<edge source="M054" target="CL024"/>
+<edge source="M055" target="CL025"/>
+<edge source="M056" target="CL016"/>
+<edge source="M057" target="CL026"/>
+<edge source="M057" target="CL027"/>
+<edge source="M058" target="CL028"/>
+<edge source="M059" target="CL031"/>
+<edge source="M060" target="CL031"/>
+<edge source="M061" target="CL029"/>
+<edge source="I001" target="S001">
+  <data key="d3">2</data>
+</edge>
+<edge source="I001" target="S024">
+  <data key="d3">2</data>
+</edge>
+<edge source="I001" target="S002">
+  <data key="d3">2</data>
+</edge>
+<edge source="I002" target="S003">
+  <data key="d3">1</data>
+</edge>
+<edge source="I003" target="S004">
+  <data key="d3">1</data>
+</edge>
+<edge source="I004" target="S002">
+  <data key="d3">2</data>
+</edge>
+<edge source="I005" target="S005">
+  <data key="d3">4</data>
+</edge>
+<edge source="I005" target="S006">
+  <data key="d3">2</data>
+</edge>
+<edge source="I005" target="S026">
+  <data key="d3">5</data>
+</edge>
+<edge source="I005" target="S008">
+  <data key="d3">2</data>
+</edge>
+<edge source="I005" target="S027">
+  <data key="d3">5</data>
+</edge>
+<edge source="I006" target="S007">
+  <data key="d3">5</data>
+</edge>
+<edge source="I007" target="S028">
+  <data key="d3">4</data>
+</edge>
+<edge source="I008" target="S006">
+  <data key="d3">2</data>
+</edge>
+<edge source="I008" target="S026">
+  <data key="d3">5</data>
+</edge>
+<edge source="I008" target="S008">
+  <data key="d3">2</data>
+</edge>
+<edge source="I008" target="S027">
+  <data key="d3">5</data>
+</edge>
+<edge source="I009" target="S010">
+  <data key="d3">3</data>
+</edge>
+<edge source="I010" target="S011">
+  <data key="d3">5</data>
+</edge>
+<edge source="I010" target="S029">
+  <data key="d3">5</data>
+</edge>
+<edge source="I010" target="S030">
+  <data key="d3">5</data>
+</edge>
+<edge source="I010" target="S031">
+  <data key="d3">4</data>
+</edge>
+<edge source="I011" target="S032">
+  <data key="d3">5</data>
+</edge>
+<edge source="I012" target="S012">
+  <data key="d3">2</data>
+</edge>
+<edge source="I013" target="S013">
+  <data key="d3">5</data>
+</edge>
+<edge source="I015" target="S014">
+  <data key="d3">2</data>
+</edge>
+<edge source="I016" target="S003">
+  <data key="d3">1</data>
+</edge>
+<edge source="I017" target="S014">
+  <data key="d3">2</data>
+</edge>
+<edge source="I019" target="S025">
+  <data key="d3">1</data>
+</edge>
+<edge source="I021" target="S001">
+  <data key="d3">2</data>
+</edge>
+<edge source="I021" target="S004">
+  <data key="d3">1</data>
+</edge>
+<edge source="I022" target="S001">
+  <data key="d3">2</data>
+</edge>
+<edge source="I022" target="S004">
+  <data key="d3">1</data>
+</edge>
+<edge source="I023" target="S004">
+  <data key="d3">1</data>
+</edge>
+<edge source="I024" target="S016">
+  <data key="d3">5</data>
+</edge>
+<edge source="I025" target="S017">
+  <data key="d3">3</data>
+</edge>
+<edge source="I026" target="S018">
+  <data key="d3">4</data>
+</edge>
+<edge source="I027" target="S019">
+  <data key="d3">5</data>
+</edge>
+<edge source="I030" target="S020">
+  <data key="d3">2</data>
+</edge>
+<edge source="I031" target="S039">
+  <data key="d3">4</data>
+</edge>
+<edge source="I031" target="S040">
+  <data key="d3">5</data>
+</edge>
+<edge source="I031" target="S041">
+  <data key="d3">4</data>
+</edge>
+<edge source="I032" target="S021">
+  <data key="d3">5</data>
+</edge>
+<edge source="I033" target="S022">
+  <data key="d3">2</data>
+</edge>
+<edge source="I034" target="S023">
+  <data key="d3">5</data>
+</edge>
+<edge source="I035" target="S033">
+  <data key="d3">5</data>
+</edge>
+<edge source="I036" target="S034">
+  <data key="d3">4</data>
+</edge>
+<edge source="I037" target="S035">
+  <data key="d3">2</data>
+</edge>
+<edge source="I037" target="S036">
+  <data key="d3">1</data>
+</edge>
+<edge source="I038" target="S037">
+  <data key="d3">5</data>
+</edge>
+<edge source="I038" target="S038">
+  <data key="d3">2</data>
+</edge>
+<edge source="CL001" target="I001"/>
+<edge source="CL001" target="I003"/>
+<edge source="CL001" target="I002"/>
+<edge source="CL001" target="I004"/>
+<edge source="CL001" target="I005"/>
+<edge source="CL002" target="I006"/>
+<edge source="CL003" target="I007"/>
+<edge source="CL004" target="I005"/>
+<edge source="CL005" target="I008"/>
+<edge source="CL006" target="I011"/>
+<edge source="CL006" target="I005"/>
+<edge source="CL007" target="I011"/>
+<edge source="CL007" target="I008"/>
+<edge source="CL008" target="I012"/>
+<edge source="CL009" target="I035"/>
+<edge source="CL009" target="I008"/>
+<edge source="CL010" target="I035"/>
+<edge source="CL010" target="I005"/>
+<edge source="CL011" target="I013"/>
+<edge source="CL031" target="I036"/>
+<edge source="CL031" target="I002"/>
+<edge source="CL031" target="I037"/>
+<edge source="CL031" target="I038"/>
+<edge source="CL013" target="I016"/>
+<edge source="CL013" target="I015"/>
+<edge source="CL014" target="I018"/>
+<edge source="CL015" target="I019"/>
+<edge source="CL016" target="I010"/>
+<edge source="CL017" target="I020"/>
+<edge source="CL018" target="I021"/>
+<edge source="CL019" target="I022"/>
+<edge source="CL020" target="I025"/>
+<edge source="CL021" target="I009"/>
+<edge source="CL022" target="I026"/>
+<edge source="CL023" target="I027"/>
+<edge source="CL030" target="I001"/>
+<edge source="CL030" target="I003"/>
+<edge source="CL030" target="I004"/>
+<edge source="CL030" target="I005"/>
+<edge source="CL030" target="I023"/>
+<edge source="CL024" target="I030"/>
+<edge source="CL025" target="I031"/>
+<edge source="CL026" target="I032"/>
+<edge source="CL026" target="I010"/>
+<edge source="CL027" target="I032"/>
+<edge source="CL027" target="I005"/>
+<edge source="CL028" target="I033"/>
+<edge source="CL029" target="I034"/>
+</graph></graphml>

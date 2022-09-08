@@ -8,17 +8,17 @@ def genPosNodes(G,delta,pos):
 	find = 0
 	i=1
 	for el in G.nodes:
-		if 'CL' in el and find == 0:
+		if 'I' in el and find == 0:
 			find = 1
 			i=1
 			delta.pop(0)
 			pos.pop(0)
-		if 'I' in el and find == 1:
+		if 'S' in el and find == 1:
 			find = 2
 			i=1
 			delta.pop(0)
 			pos.pop(0)
-		if 'S' in el and find == 2:
+		if 'CL' in el and find == 2:
 			find = 3
 			i=1
 			delta.pop(0)
