@@ -83,7 +83,7 @@ def greedyMinSetCover(X,S):
 		
 	return I
 
-def exeMinSetCoverV1(MGM):
+def exeMinSetCoverV1(MGM,results={}):
 	listOfMetrics = [node for node in MGM.nodes() if 'M' in node]
 	listOfClusters = []
 	listOfInputs = []
@@ -112,13 +112,18 @@ def exeMinSetCoverV1(MGM):
 
 	print('[V1] METRICS COV: {}'.format(len(listOfCovMetrics)), '\t/\tALL METRICS: {}'.format(len(listOfMetrics)))
 	print('[V1] MIN CLUSTERS COV: {}'.format(len(listOfCovCluster)), '\t/\tALL CLASTERS: {}'.format(len(listOfClusters)))
+	results['M_T']= str(len(listOfMetrics))
+	results['M_C']= str(len(listOfCovMetrics))
+	results['C_T']= str(len(listOfClusters))
+	results['C_C']= str(len(listOfCovCluster))
+
 
 	
 	covGraph_v1 = MGM.subgraph(listOfCovMetrics+listOfCovCluster)
 
-	return listOfCovCluster,covGraph_v1
+	return listOfCovCluster,covGraph_v1,results
 
-def exeMinSetCoverV2(MGM,listOfCovCluster):
+def exeMinSetCoverV2(MGM,listOfCovCluster,results={}):
 	listOfClusters = []
 	listOfInputs = []
 	listOfCovMetrics	=	[]
@@ -148,7 +153,11 @@ def exeMinSetCoverV2(MGM,listOfCovCluster):
 	else:
 		print('[V2] MIN INPUTS COV: {}'.format(len(listOfCovInput)), '\t\t/\tALL INPUTS: {}'.format(len(listOfInputs)))
 
-	return listOfCovInput,covGraph_v2
+	
+	results['I_T']= str(len(listOfInputs))
+	results['I_C']= str(len(listOfCovInput))
+
+	return listOfCovInput,covGraph_v2,results
 
 def getMinimumCostEdge(listOfWeightEdgeAttr, source):
 	minW = 999999
@@ -183,7 +192,7 @@ def getMinimumCompEdge(edges, source,nodesAttr):
 			
 	return minTarget
 
-def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput):
+def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput,results={}):
 	listOfMetrics = [x for x in MGM.nodes if 'M' in x and MGM.out_degree(x) > 0]
 	listOfSources = [x for x in MGM.nodes if 'S' in x]
 
@@ -204,22 +213,28 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput):
 	print('[V3] THE TOTAL COST IS: {}'.format(totalCost))
 	print('[V3] THE TOTAL COMPUTATIONAL COST IS: {}'.format(sumComp))
 
-	return listOfMinCostSources,covGraph_v3
+	results['S_T']= str(len(listOfSources))
+	results['S_C']= str(len(listOfMinCostSources))
+	results['COST']= totalCost
+	results['COMP']= sumComp
+
+	return listOfMinCostSources,covGraph_v3,results
 	
 def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,show=False):
 	print('START TASK: MGMminSetCover()')
+	results = {}
 	outputFile_BASE	=	outputFile.split('.')[0]+"_START."+outputFile.split('.')[1]
 
 	outputFile_v1	=	outputFile.split('.')[0]+"_v1."+outputFile.split('.')[1]
-	listOfCovCluster,covGraph_v1	=	exeMinSetCoverV1(MGM)
+	listOfCovCluster,covGraph_v1,results	=	exeMinSetCoverV1(MGM,results)
 
 
 	outputFile_v2	=	outputFile.split('.')[0]+"_v2."+outputFile.split('.')[1]
-	listOfCovInput,covGraph_v2    =   exeMinSetCoverV2(MGM,listOfCovCluster)
+	listOfCovInput,covGraph_v2,results    =   exeMinSetCoverV2(MGM,listOfCovCluster,results)
 	
 
 	outputFile_COMPLETE	=	outputFile.split('.')[0]+"_COVERED."+outputFile.split('.')[1]
-	listOfMinCostSources,covGraph_v3	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput)
+	listOfMinCostSources,covGraph_v3,results	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,results)
 
 	if draw:
 		drawGraph(MGM, outputFile_BASE,pos,config,saveFig=saveFig,catColor=color,show=show)
@@ -227,8 +242,10 @@ def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,s
 		drawGraph(covGraph_v2, outputFile_v2,pos,config,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v3, outputFile_COMPLETE,pos,config,saveFig=saveFig,catColor=color,show=show)
 	
+	print(results)
 	print('END TASK: MGMminSetCover()')
 	print('----------------------------------------')
+	return results
 
 def getListOfClusters(MGM,listOfInput,checkInputs=True):
 	#this function respect that a CLUSTER set is a sub sef of nodes
@@ -253,13 +270,14 @@ def minSetCovByINPUT(MGM, listOfInput, outputFile,pos,config):
 	print('ok')
 	subGraph	=	MGM.subgraph(listOfMetrics+listOfCluster+listOfInput+listOfSources)
 
-	MGMminSetCover(subGraph,outputFile,pos,config)
+	res = MGMminSetCover(subGraph,outputFile,pos,config)
 
 
 
 
 	results	=	('With: {} initial inputs I covered: {} metrics\n\n').format(len(listOfInput), len(listOfMetrics))	
 	print(results)
+	return res
 
 def minSetCovBySOURCE(MGM, listOfSources, outputFile,pos,config,listOfInput=True):
 	if listOfInput == True:
@@ -269,7 +287,7 @@ def minSetCovBySOURCE(MGM, listOfSources, outputFile,pos,config,listOfInput=True
 	
 	subGraph	=	MGM.subgraph(listOfMetrics+listOfCluster+listOfInput+listOfSources)
 
-	MGMminSetCover(subGraph,outputFile,pos,config)
+	return MGMminSetCover(subGraph,outputFile,pos,config)
 
 def maxSetCovByATTR(MGM,outputFile,valMax,attr,pos,config):
 	listOfInputs				=	[inp for inp in MGM.nodes if 'I' in inp]
@@ -302,7 +320,7 @@ def maxSetCovByATTR(MGM,outputFile,valMax,attr,pos,config):
 	listOfCovMetrics	=	list(set([edge[0] for edge in MGM.in_edges(listOfCovCluster) ]))
 
 	subGraph	=	MGM.subgraph(listOfCovMetrics+listOfCovCluster+listOfCovInputs+listOfCovSources)
-	MGMminSetCover(subGraph,outputFile,pos,config)
+	return MGMminSetCover(subGraph,outputFile,pos,config)
 	
 def minCapacitySetCover(MGM, outputFile,pos,config):
 	listOfSources		=	[x for x in MGM.nodes if 'S' in x]
@@ -321,7 +339,7 @@ def minCapacitySetCover(MGM, outputFile,pos,config):
 
 	listOfCovMinCompSources	=	list(set(listOfCovMinCompSources))
 	
-	minSetCovBySOURCE(MGM, listOfCovMinCompSources, outputFile,pos,config)
+	return minSetCovBySOURCE(MGM, listOfCovMinCompSources, outputFile,pos,config)
 
 	
 	

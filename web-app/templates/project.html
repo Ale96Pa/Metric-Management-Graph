@@ -21,8 +21,93 @@
     <link href="{{ url_for('static',filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <style>
+        .bg_black{
+            position: absolute;
+            z-index: 1;
+            background-color: #333;
+            height: 100%;
+            width: 100%;
+            opacity: .8; 
+        }
+        .loader  {
+        position: absolute;
+        z-index: 100 !important;
+        animation: rotate 1s infinite;  
+        height: 50px;
+        width: 50px;
+        left: 50%;
+        top: 10%;
+        }
+
+        .loader:before,
+        .loader:after {   
+        border-radius: 50%;
+        content: '';
+        display: block;
+        height: 20px;  
+        width: 20px;
+        }
+        .loader:before {
+        animation: ball1 1s infinite;  
+        background-color: #cb2025;
+        box-shadow: 30px 0 0 #f8b334;
+        margin-bottom: 10px;
+        }
+        .loader:after {
+        animation: ball2 1s infinite; 
+        background-color: #00a096;
+        box-shadow: 30px 0 0 #97bf0d;
+        }
+
+        @keyframes rotate {
+        0% { 
+            -webkit-transform: rotate(0deg) scale(0.8); 
+            -moz-transform: rotate(0deg) scale(0.8);
+        }
+        50% { 
+            -webkit-transform: rotate(360deg) scale(1.2); 
+            -moz-transform: rotate(360deg) scale(1.2);
+        }
+        100% { 
+            -webkit-transform: rotate(720deg) scale(0.8); 
+            -moz-transform: rotate(720deg) scale(0.8);
+        }
+        }
+
+        @keyframes ball1 {
+        0% {
+            box-shadow: 30px 0 0 #f8b334;
+        }
+        50% {
+            box-shadow: 0 0 0 #f8b334;
+            margin-bottom: 0;
+            -webkit-transform: translate(15px,15px);
+            -moz-transform: translate(15px, 15px);
+        }
+        100% {
+            box-shadow: 30px 0 0 #f8b334;
+            margin-bottom: 10px;
+        }
+        }
+
+        @keyframes ball2 {
+        0% {
+            box-shadow: 30px 0 0 #97bf0d;
+        }
+        50% {
+            box-shadow: 0 0 0 #97bf0d;
+            margin-top: -20px;
+            -webkit-transform: translate(15px,15px);
+            -moz-transform: translate(15px, 15px);
+        }
+        100% {
+            box-shadow: 30px 0 0 #97bf0d;
+            margin-top: 0;
+        }
+        }
+
 		#cy {
-		width: 80%;
+		width: 78%;
 		height: 4000px;
 		display: block;
         border-style: solid;
@@ -31,8 +116,36 @@
         #nodes{
             width: 20%;
             background-color: white;
-            height: 100%;
+            height: 4000px;
             padding: 20px;
+            color: black;
+        }
+        #results{
+            color: black;
+        }
+        .bold{
+            font-weight: bold;
+        }
+        #scheme {
+            height: 200px;
+            overflow: hidden;
+        }
+        .ramp {
+            float: left;
+            padding: 5px 5px 0 5px;
+            cursor: pointer;
+        }
+        .ramp:hover {
+	        background-color: #ccc;
+        }
+
+        .ramp.selected {
+	        background-color: #999;
+        }
+
+        .ramp rect, #color-chips rect {
+	        stroke: #333;
+	        stroke-width: .5px;
         }
 
 	</style>
@@ -42,6 +155,10 @@
 </head>
 
 <body id="page-top">
+    <div id='loadingAn'class="bg_black" style="display:none;">
+        <div class="loader"></div>
+    </div>
+    
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -50,7 +167,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-text mx-3">MGM Admin Console</div>
             </a>
 
@@ -114,62 +231,23 @@
 
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
-                            {% if func=='main' %}
-                            <li class="nav-item" style="font-weight: bold;">
-                           <a class="nav-link" style="color: black;"  href="/project/{{project}}">Graph</a>
+                            
+                            <li class="nav-item ">
+                           <a class="nav-link bold" style="color: black;"  id="main" href="/project/{{projectName}}">Graph</a>
                            </li>
-                           {% else %}
-                           <li class="nav-item">
-                           <a class="nav-link"  href="#">Graph</a>
+                             <li class="nav-item" >
+                                <a class="nav-link" style="color: black;"  id="id1" href="#content">Coverage ALL Metrics</a>
                             </li>
-                           {% endif %}
-
-                          {% if func=='id1' %}
-                             <li class="nav-item" style="font-weight: bold;">
-                            <a class="nav-link" style="color: black;"  href="?f=id1">Min-Set-Cover</a>
+                            <li class="nav-item" >
+                                <a class="nav-link" style="color: black;"  id="id2" href="#content">Get Min Comp to Cov ALL Metrics</a>
                             </li>
-                            {% else %}
-                            <li class="nav-item">
-                            <a class="nav-link"  href="?f=id1">Min-Set-Cover</a>
-                             </li>
-                            {% endif %}
-
-                            {% if func=='id2' %}
-                            <li class="nav-item" style="font-weight: bold;">
-                           <a class="nav-link" style="color: black;"  href="?f=id2&c=15">Cost of Source in GET Set-Cover</a>
-                           </li>
-                           {% else %}
-                           <li class="nav-item">
-                           <a class="nav-link"  href="?f=id2&c=15">Cost of Source in GET Set-Cover</a>
+                            <li class="nav-item" >
+                                <a class="nav-link" style="color: black;"  id="id3" href="#content">Coverage ALL Metrics w/ spec. COST</a>
                             </li>
-                           {% endif %}
 
-                           {% if func=='id3' %}
-                           <li class="nav-item" style="font-weight: bold;">
-                          <a class="nav-link" style="color: black;"  href="?f=id3">Min Computational Capacity Set Cover</a>
-                          </li>
-                          {% else %}
-                          <li class="nav-item">
-                          <a class="nav-link"  href="?f=id3">Min Computational Capacity Set Cover</a>
-                           </li>
-                          {% endif %}
 
-                          {% if func=='minSetCovByMetric' %}
-                           <li class="nav-item" style="font-weight: bold;">
-                          <a class="nav-link" style="color: black;"  href="?f=minSetCovByMetric">Min-Set-Cover By Metrics</a>
-                          </li>
-                          {% else %}
-                          <li class="nav-item">
-                          <a class="nav-link"  href="?f=minSetCovByMetric">Min-Set-Cover By Metrics</a>
-                           </li>
-                          {% endif %}
-                         
-                          <li class="nav-item">
-                            <a class="nav-link" href="#"></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#"></a>
-                          </li>
+
+                          
 
                         </ul>
                       </div>
@@ -181,7 +259,40 @@
 
                 <!-- Begin Page Content -->
                 <div class="row">
-                    <div class="coll" id="nodes">No selected nodes</div>
+                    <div class="coll" id="nodes"><b>No selected nodes</b><br>
+                    
+                    
+                        <div id="results">
+                            
+                        </div>
+                        <div id="scheme" class="section">
+                            <p><b>Pick a color scheme:</b></p>
+                            <div id="scheme1" style="width: 100%;">
+                                <label id="multi" style="display: none;"></label>
+                                <div id="ramps">
+                                    <div class="ramp BrBG selected"><svg width="15" height="75"><rect fill="rgb(166,97,26)" width="15" height="15" y="0"></rect><rect fill="rgb(223,194,125)" width="15" height="15" y="15"></rect><rect fill="rgb(245,245,245)" width="15" height="15" y="30"></rect><rect fill="rgb(128,205,193)" width="15" height="15" y="45"></rect><rect fill="rgb(1,133,113)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp PiYG"><svg width="15" height="75"><rect fill="rgb(208,28,139)" width="15" height="15" y="0"></rect><rect fill="rgb(241,182,218)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(184,225,134)" width="15" height="15" y="45"></rect><rect fill="rgb(77,172,38)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp PRGn"><svg width="15" height="75"><rect fill="rgb(123,50,148)" width="15" height="15" y="0"></rect><rect fill="rgb(194,165,207)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(166,219,160)" width="15" height="15" y="45"></rect><rect fill="rgb(0,136,55)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp PuOr"><svg width="15" height="75"><rect fill="rgb(230,97,1)" width="15" height="15" y="0"></rect><rect fill="rgb(253,184,99)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(178,171,210)" width="15" height="15" y="45"></rect><rect fill="rgb(94,60,153)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp RdBu"><svg width="15" height="75"><rect fill="rgb(202,0,32)" width="15" height="15" y="0"></rect><rect fill="rgb(244,165,130)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(146,197,222)" width="15" height="15" y="45"></rect><rect fill="rgb(5,113,176)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp RdGy"><svg width="15" height="75"><rect fill="rgb(202,0,32)" width="15" height="15" y="0"></rect><rect fill="rgb(244,165,130)" width="15" height="15" y="15"></rect><rect fill="rgb(255,255,255)" width="15" height="15" y="30"></rect><rect fill="rgb(186,186,186)" width="15" height="15" y="45"></rect><rect fill="rgb(64,64,64)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp RdYlBu"><svg width="15" height="75"><rect fill="rgb(215,25,28)" width="15" height="15" y="0"></rect><rect fill="rgb(253,174,97)" width="15" height="15" y="15"></rect><rect fill="rgb(255,255,191)" width="15" height="15" y="30"></rect><rect fill="rgb(171,217,233)" width="15" height="15" y="45"></rect><rect fill="rgb(44,123,182)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp RdYlGn"><svg width="15" height="75"><rect fill="rgb(215,25,28)" width="15" height="15" y="0"></rect><rect fill="rgb(253,174,97)" width="15" height="15" y="15"></rect><rect fill="rgb(255,255,191)" width="15" height="15" y="30"></rect><rect fill="rgb(166,217,106)" width="15" height="15" y="45"></rect><rect fill="rgb(26,150,65)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp Spectral"><svg width="15" height="75"><rect fill="rgb(215,25,28)" width="15" height="15" y="0"></rect><rect fill="rgb(253,174,97)" width="15" height="15" y="15"></rect><rect fill="rgb(255,255,191)" width="15" height="15" y="30"></rect><rect fill="rgb(171,221,164)" width="15" height="15" y="45"></rect><rect fill="rgb(43,131,186)" width="15" height="15" y="60"></rect></svg></div></div>
+                            </div> 
+                           
+                        </div>
+                        <div id="comp" class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">
+                                <input type="checkbox" id="checkbox1" >
+                              </div>
+                            </div>
+                            <input type="text" class="form-control" id="maxcost" placeholder="Insert the MAX Cost">
+                          </div>
+                       
+                        </div>
+                    
                     <div class="coll" id="cy"></div>
 
                 </div>
@@ -252,35 +363,259 @@
                 'line-color': '#000',
                 'target-arrow-color': '#000'
             })
-            .selector('.bluenode')
+            .selector('.color1_1')
             .style({
-                'background-color': '#6161fc',
-                'line-color': '#6161fc',
-                'target-arrow-color': '#6161fc',
+                'background-color': '#a6611a',
+                'line-color': '#a6611a',
+                'target-arrow-color': '#a6611a',
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             })
-            .selector('.rednode')
+            .selector('.color1_2')
             .style({
-                'background-color': '#fc6161',
-                'line-color': '#fc6161',
-                'target-arrow-color': '#fc6161',
+                'background-color': '#dfc30c',
+                'line-color': '#dfc30c',
+                'target-arrow-color': '#dfc30c',
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             })
-            .selector('.greennode')
+            .selector('.color1_3')
             .style({
-                'background-color': '#66fc61',
-                'line-color': '#66fc61',
-                'target-arrow-color': '#66fc61',
+                'background-color': '#80cdc1',
+                'line-color': '#80cdc1',
+                'target-arrow-color': '#80cdc1',
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             })
-            .selector('.violetnode')
+            .selector('.color1_4')
             .style({
-                'background-color': '#d861fc',
-                'line-color': '#d861fc',
+                'background-color': '#018571',
+                'line-color': '#018571',
                 'target-arrow-color': '#d861fc',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color2_1')
+            .style({
+                'background-color': '#d01c8b',
+                'line-color': '#d01c8b',
+                'target-arrow-color': '#d01c8b',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color2_2')
+            .style({
+                'background-color': '#f1b6da',
+                'line-color': '#f1b6da',
+                'target-arrow-color': '#f1b6da',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color2_3')
+            .style({
+                'background-color': '#b8e186',
+                'line-color': '#b8e186',
+                'target-arrow-color': '#b8e186',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color2_4')
+            .style({
+                'background-color': '#4cac26',
+                'line-color': '#4cac26',
+                'target-arrow-color': '#4cac26',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color3_1')
+            .style({
+                'background-color': '#7c3294',
+                'line-color': '#7c3294',
+                'target-arrow-color': '#7c3294',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color3_2')
+            .style({
+                'background-color': '#c2a5cf',
+                'line-color': '#c2a5cf',
+                'target-arrow-color': '#c2a5cf',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color3_3')
+            .style({
+                'background-color': '#a6dba0',
+                'line-color': '#a6dba0',
+                'target-arrow-color': '#a6dba0',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color3_4')
+            .style({
+                'background-color': '#008836',
+                'line-color': '#008836',
+                'target-arrow-color': '#008836',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color4_1')
+            .style({
+                'background-color': 'rgb(230,97,1)',
+                'line-color': 'rgb(230,97,1)',
+                'target-arrow-color': 'rgb(230,97,1)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color4_2')
+            .style({
+                'background-color': 'rgb(253,184,99)',
+                'line-color': 'rgb(253,184,99)',
+                'target-arrow-color': 'rgb(253,184,99)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color4_3')
+            .style({
+                'background-color': 'rgb(178,171,210)',
+                'line-color': 'rgb(178,171,210)',
+                'target-arrow-color': 'rgb(178,171,210)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color4_4')
+            .style({
+                'background-color': 'rgb(94,60,153)',
+                'line-color': 'rgb(94,60,153)',
+                'target-arrow-color': 'rgb(94,60,153)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color5_1')
+            .style({
+                'background-color': 'rgb(202,0,32)',
+                'line-color': 'rgb(202,0,32)',
+                'target-arrow-color': 'rgb(202,0,32)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color5_2')
+            .style({
+                'background-color': 'rgb(244,165,130)',
+                'line-color': 'rgb(244,165,130)',
+                'target-arrow-color': 'rgb(244,165,130)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color5_3')
+            .style({
+                'background-color': 'rgb(146,197,222)',
+                'line-color': 'rgb(146,197,222)',
+                'target-arrow-color': 'rgb(146,197,222)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color5_4')
+            .style({
+                'background-color': 'rgb(5,113,176)',
+                'line-color': 'rgb(5,113,176)',
+                'target-arrow-color': 'rgb(5,113,176)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color6_1')
+            .style({
+                'background-color': 'rgb(202,0,32)',
+                'line-color': 'rgb(202,0,32)',
+                'target-arrow-color': 'rgb(202,0,32)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color6_2')
+            .style({
+                'background-color': 'rgb(244,165,130)',
+                'line-color': 'rgb(244,165,130)',
+                'target-arrow-color': 'rgb(244,165,130)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color6_3')
+            .style({
+                'background-color': 'rgb(186,186,186)',
+                'line-color': 'rgb(186,186,186)',
+                'target-arrow-color': 'rgb(186,186,186)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color6_4')
+            .style({
+                'background-color': 'rgb(64,64,64)',
+                'line-color': 'rgb(64,64,64)',
+                'target-arrow-color': 'rgb(64,64,64)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color7_1')
+            .style({
+                'background-color': 'rgb(202,0,32)',
+                'line-color': 'rgb(202,0,32)',
+                'target-arrow-color': 'rgb(202,0,32)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color7_2')
+            .style({
+                'background-color': 'rgb(244,165,130)',
+                'line-color': 'rgb(244,165,130)',
+                'target-arrow-color': 'rgb(244,165,130)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color7_3')
+            .style({
+                'background-color': 'rgb(171,217,233)',
+                'line-color': 'rgb(171,217,233)',
+                'target-arrow-color': 'rgb(171,217,233)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color7_4')
+            .style({
+                'background-color': 'rgb(44,123,182)',
+                'line-color': 'rgb(44,123,182)',
+                'target-arrow-color': 'rgb(44,123,182)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color8_3')
+            .style({
+                'background-color': 'rgb(166,217,106)',
+                'line-color': 'rgb(166,217,106)',
+                'target-arrow-color': 'rgb(166,217,106)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color8_4')
+            .style({
+                'background-color': 'rgb(26,150,65)',
+                'line-color': 'rgb(26,150,65)',
+                'target-arrow-color': 'rgb(26,150,65)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color9_3')
+            .style({
+                'background-color': 'rgb(171,221,164)',
+                'line-color': 'rgb(171,221,164)',
+                'target-arrow-color': 'rgb(171,221,164)',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            })
+            .selector('.color9_4')
+            .style({
+                'background-color': 'rgb(43,131,186)',
+                'line-color': 'rgb(43,131,186)',
+                'target-arrow-color': 'rgb(43,131,186)',
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             })
@@ -288,7 +623,7 @@
             .style({
                 'background-color': '#b80000',
                 'line-color': '#b80000',
-                'target-arrow-color': '#b80000',
+                'target-arrow-color': '#018571',
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             })
@@ -300,7 +635,8 @@
 		var jsonGrpah = $.getJSON("{{ url_for('static', filename=projectNameFile) }}", function(data){
 		
 			cy.add(cy.json(data));
-            elems = cy.nodes()[1]['_private']['data']['name']
+       
+            
         
             cy.batch(function(){
                 cy.nodes().forEach(element => {
@@ -310,32 +646,23 @@
                         iid =  element['_private']['data']['id']
                         
                         if(catelem == 'Defense Metrics'){
-                            cy.$('#'+iid).addClass('bluenode')
+                            cy.$('#'+iid).addClass('color1_1')
                         }
                         if(catelem == 'Attack Metrics'){
-                            cy.$('#'+iid).addClass('rednode')
+                            cy.$('#'+iid).addClass('color1_2')
                         }
                         if(catelem == 'Situation Metrics'){
-                            cy.$('#'+iid).addClass('greennode')
+                            cy.$('#'+iid).addClass('color1_3')
                         }
                         if(catelem == 'Vulnerability Metrics'){
-                            cy.$('#'+iid).addClass('violetnode')
+                            cy.$('#'+iid).addClass('color1_4')
                         }
                     } 
                     
                 });
             });
-            
-            var jsonGrpah2 = $.getJSON("{{ url_for('static', filename=projectNameFileNew) }}", function(data){
-                cy.add(cy.json(data));
-                cy.animate({
-                     pan: { x: 150, y: 100 },
-                        zoom: 1
-                        }, {
-                        duration: 2000
-                        });
-            });
-		});
+        });
+		
         cy.autounselectify(false);
         
         selectedElem = []
@@ -359,18 +686,469 @@
     });
 
     function updateHTML(selectedElem){
-        text = 'The Selected node are:<br>'
+        res = $('#results').html()
+        scheme = $('#scheme').html()
+        comp = $('#comp').html()
+        text = '<b>The Selected node are:</b><br>';
+        nodesM = '';
+        nodesC = '';
+        nodesI = '';
+        nodesS = '';
         selectedElem.forEach(element => {
-
-            text = text + element+';<br>'
+            if(element.charAt(0) == 'M'){
+                nodesM = nodesM + element+' <br>'
+            }
+            if(element.charAt(0) == 'C'){
+                nodesC = nodesC + element+' <br>'
+            }
+            if(element.charAt(0) == 'I'){
+                nodesI = nodesI + element+' <br>'
+            }
+            if(element.charAt(0) == 'S'){
+                nodesS = nodesS + element+' <br>'
+            }
+            
         });
-        console.log(text)
+        text = text + nodesM + nodesC + nodesI + nodesS;
+        text = text + '<br><div id="results"></div><div id="scheme"></div><div id="comp"></div>'
         $('#nodes').html(text)
+        $('#results').html(res)
+        $('#scheme').html(scheme)
+        $('#comp').html(comp)
     }
     
+    $( "#id1" ).click(function(){
+        var goelem = [...selectedElem]
+        goelem.push('id1')
+        to_send = JSON.stringify(goelem)
+        $("#loadingAn").show()
+        $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                data: to_send,
+                dataType: 'json',
+                url: "/project/{{projectName}}",
+                success: function (e) {
+                    $("#loadingAn").hide()
+                    console.log(e);
+                    text = "<b>The results of this analysis are:</b><br>Metric Covered: "+e['M_C']+'<br>Cluster Covered: '+e['C_C']+'/'+e['C_T']+'<br>';
+                    text = text + 'Input Covered: '+e['I_C']+'/'+e['I_T']+'<br>Source Covered: '+e['S_C']+'/'+e['S_T']+'<br>'
+                    text = text + 'Total Cost: '+e['COST']+'<br>Total Computation: '+e['COMP']
+                    $('#results').html(text)
 
+                    var jsonGrpah = $.getJSON('/static/'+e['output'], function(data){
+                        cy.add(cy.json(data));
+                    });
+                    $( ".nav-link" ).removeClass('bold')
+                    $( "#id1" ).addClass('bold')
+                    if(e['M_C']=='0'){
+                        alert('With the selected node i am not able to cover a metric')
 
+                    }
+
+                },
+                error: function(error) {
+                    $("#loadingAn").hide()
+                    console.log(error);
+            }
+            });
+
+    });
+    $( "#id2" ).click(function(){
+        var goelem = [...selectedElem]
+        goelem.push('id2')
+        to_send = JSON.stringify(goelem)
+        $("#loadingAn").show()
+        $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                data: to_send,
+                dataType: 'json',
+                url: "/project/{{projectName}}",
+                success: function (e) {
+                    $("#loadingAn").hide()
+                    console.log(e);
+                    text = "<b>The results of this analysis are:</b><br>Metric Covered: "+e['M_C']+'<br>Cluster Covered: '+e['C_C']+'/'+e['C_T']+'<br>';
+                    text = text + 'Input Covered: '+e['I_C']+'/'+e['I_T']+'<br>Source Covered: '+e['S_C']+'/'+e['S_T']+'<br>'
+                    text = text + 'Total Cost: '+e['COST']+'<br>Total Computation: '+e['COMP']
+                    $('#results').html(text)
+
+                    var jsonGrpah = $.getJSON('/static/'+e['output'], function(data){
+                        cy.add(cy.json(data));
+                    });
+                    $( ".nav-link" ).removeClass('bold')
+                    $( "#id2" ).addClass('bold')
+                    
+                    if(e['M_C']=='0'){
+                        alert('With the selected node i am not able to cover a metric')
+
+                    }
+
+                },
+                error: function(error) {
+                    $("#loadingAn").hide()
+                    console.log(error);
+            }
+            });
+
+    });
+    $( "#id3" ).click(function(){
+        var goelem = [...selectedElem]
+        checkbox = $('#checkbox1').val();maxcost
+        goelem.push(checkbox)
+        valCost = checkbox = $('#maxcost').val();
+        goelem.push(valCost)
+        goelem.push('id3')
+
+        to_send = JSON.stringify(goelem)
+        $("#loadingAn").show()
+        $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                data: to_send,
+                dataType: 'json',
+                url: "/project/{{projectName}}",
+                success: function (e) {
+                    $("#loadingAn").hide()
+                    console.log(e);
+                    text = "<b>The results of this analysis are:</b><br>Metric Covered: "+e['M_C']+'<br>Cluster Covered: '+e['C_C']+'/'+e['C_T']+'<br>';
+                    text = text + 'Input Covered: '+e['I_C']+'/'+e['I_T']+'<br>Source Covered: '+e['S_C']+'/'+e['S_T']+'<br>'
+                    text = text + 'Total Cost: '+e['COST']+'<br>Total Computation: '+e['COMP']
+                    $('#results').html(text)
+
+                    var jsonGrpah = $.getJSON('/static/'+e['output'], function(data){
+                        cy.add(cy.json(data));
+                    });
+                    $( ".nav-link" ).removeClass('bold')
+                    $( "#id3" ).addClass('bold')
+                    if(e['M_C']=='0'){
+                        alert('With the selected node i am not able to cover a metric')
+
+                    }
+
+                },
+                error: function(error) {
+                    $("#loadingAn").hide()
+                    console.log(error);
+            }
+            });
+
+    });
     
+
+    function removeNodeClasses(){
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            for (let i = 1; i < 10; i++) {
+                                col = 'color'+i.toString()+'_1';
+                                cy.$('#'+iid).removeClass(col)
+                            }
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            for (let i = 1; i < 10; i++) {
+                                col = 'color'+i.toString()+'_2';
+                                cy.$('#'+iid).removeClass(col)
+                            }
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            for (let i = 1; i < 10; i++) {
+                                col = 'color'+i.toString()+'_3';
+                                cy.$('#'+iid).removeClass(col)
+                            }
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            for (let i = 1; i < 10; i++) {
+                                col = 'color'+i.toString()+'_4';
+                                cy.$('#'+iid).removeClass(col)
+                            }
+                        }
+                    } 
+                    
+                });
+            });
+
+    }
+
+    $( ".BrBG" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".BrBG" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color1_1')
+
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color1_2')
+                            
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color1_3')
+                            
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color1_4')
+                           
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".PiYG" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".PiYG" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color2_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color2_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color2_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color2_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".PRGn" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".PRGn" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color3_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color3_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color3_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color3_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".PuOr" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".PuOr" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color4_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color4_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color4_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color4_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".RdBu" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".RdBu" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color5_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color5_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color5_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color5_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".RdGy" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".RdGy" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color6_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color6_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color6_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color6_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".RdYlBu" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".RdYlBu" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color7_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color7_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color7_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color7_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".RdYlGn" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".RdYlGn" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color7_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color7_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color8_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color8_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
+    $( ".Spectral" ).click(function(){
+        removeNodeClasses()
+        $(".ramp.selected").removeClass("selected");
+        $( ".Spectral" ).addClass('selected');
+
+        cy.batch(function(){
+                cy.nodes().forEach(element => {
+                    catelem = element['_private']['data']['category']
+                    if(typeof catelem !== "undefined")
+                    {
+                        iid =  element['_private']['data']['id']
+                        
+                        if(catelem == 'Defense Metrics'){
+                            cy.$('#'+iid).addClass('color7_1')
+                        }
+                        if(catelem == 'Attack Metrics'){
+                            cy.$('#'+iid).addClass('color7_2')
+                        }
+                        if(catelem == 'Situation Metrics'){
+                            cy.$('#'+iid).addClass('color9_3')
+                        }
+                        if(catelem == 'Vulnerability Metrics'){
+                            cy.$('#'+iid).addClass('color9_4')
+                        }
+                    } 
+                    
+                });
+            });
+
+    });
 	
 
 	</script>

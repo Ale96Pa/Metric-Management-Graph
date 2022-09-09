@@ -114,6 +114,14 @@ class MGM():
 		except Exception as e:
 			print(e)
 			return 'error'
+
+	def minSetCoverOut(self,G,output):
+		try:
+			output = self.outputPath+self.projectName+'-minSetCov-'+output+'.pdf'
+			return MGMminSetCover(G, output,self.postionOfNodes,self.config)
+		except Exception as e:
+			print(e)
+		return 'error'
 	
 	def minSetCoverByMetric(self,G,metrics):
 		try:
@@ -138,11 +146,25 @@ class MGM():
 		except Exception as e:
 			print(e)
 			return 'error'
+	def minSetCoverByInputOut(self,G,inputs,output):
+		try:
+			output = self.outputPath+self.projectName+'-minSetCov-'+output+'.pdf'
+			return minSetCovByINPUT(G, inputs, output,self.postionOfNodes,self.config)
+		except Exception as e:
+			print(e)
+			return 'error'
 
 	def minSetCoverBySource(self,G,sources):
 		try:
 			minSetCovBySOURCE(G, sources, self.outputPath+self.projectName+'-minSetCovBySources.pdf',self.postionOfNodes,self.config)
 			return 'ok'
+		except Exception as e:
+			print(e)
+			return 'error'
+	def minSetCoverBySourceOut(self,G,sources,output):
+		try:
+			output = self.outputPath+self.projectName+'-minSetCov-'+output+'.pdf'
+			return minSetCovBySOURCE(G, sources, output,self.postionOfNodes,self.config)
 		except Exception as e:
 			print(e)
 			return 'error'
@@ -154,11 +176,26 @@ class MGM():
 		except Exception as e:
 			print(e)
 			return 'error'
+	def maxSetCovByAttributeOnEdgeOut(self,G,maxValue,output,attr='weight'):
+		try:
+			output = self.outputPath+self.projectName+'-minSetCovByAttributeOnEdge-'+output+'.pdf'
+			return maxSetCovByATTR(G,output,maxValue,attr,self.postionOfNodes,self.config)
+		except Exception as e:
+			print(e)
+			return 'error'
 	
 	def minCapacitySetCover(self,G):
 		try:
 			minCapacitySetCover(G,self.outputPath+self.projectName+'-minCapacitySetCover.pdf',self.postionOfNodes,self.config)
 			return 'ok'
+		except Exception as e:
+			print(e)
+			return 'error'
+	def minCapacitySetCoverOut(self,G, output):
+		try:
+			output = self.outputPath+self.projectName+'-minCapacitySetCover-'+output+'.pdf'
+			print(output)
+			return minCapacitySetCover(G,output,self.postionOfNodes,self.config)
 		except Exception as e:
 			print(e)
 			return 'error'
