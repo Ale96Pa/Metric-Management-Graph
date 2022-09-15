@@ -18,6 +18,7 @@ from app.lib.minSetCover import MGMminSetCover
 from app.lib.minSetCover import minSetCovByINPUT
 from app.lib.minSetCover import minSetCovBySOURCE
 from app.lib.minSetCover import maxSetCovByATTR
+from app.lib.minSetCover import maxSetCovByATTRv2
 from app.lib.minSetCover import minCapacitySetCover
 
 
@@ -173,6 +174,15 @@ class MGM():
 		try:
 			maxSetCovByATTR(G,self.outputPath+self.projectName+'-minSetCovByAttributeOnEdge.pdf',maxValue,attr,self.postionOfNodes,self.config)
 			return 'ok'
+		except Exception as e:
+			print(e)
+			return 'error'
+
+	def maxSetCovByAttributeOnEdgev2(self,G,maxValue,output):
+		try:
+			output = self.outputPath+self.projectName+'-fixedCostAllMetrics-'+output+'.pdf'
+			
+			return maxSetCovByATTRv2(G,maxValue,output,self.postionOfNodes,self.config)
 		except Exception as e:
 			print(e)
 			return 'error'

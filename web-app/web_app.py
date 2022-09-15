@@ -82,13 +82,13 @@ def get_project(projectName):
 			results['output'] = outputFile
 		
 		if func == 'id3':
-			outputFile = 'projects/'+projectName+'/output/'+projectName+'-minSetCovByAttributeOnEdge-'+func+'_COVERED.json'
+			outputFile = 'projects/'+projectName+'/output/'+projectName+'-fixedCostAllMetrics-'+func+'_COVERED.json'
 			
 			check = data[-3]
 			if check == 'on':
 				maxvalue = int(data[-2])
 
-				results = mgm.maxSetCovByAttributeOnEdgeOut(mgm.G_c,maxvalue,func)
+				results = mgm.maxSetCovByAttributeOnEdgev2(mgm.G_c,maxvalue,func)
 				results['func'] = func
 				results['output'] = outputFile
 			else:

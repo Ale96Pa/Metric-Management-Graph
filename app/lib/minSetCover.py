@@ -1,5 +1,7 @@
 import networkx as nx
 import csv
+import itertools
+
 
 from app.lib.draw import drawGraph
 
@@ -192,6 +194,22 @@ def getMinimumCompEdge(edges, source,nodesAttr):
 			
 	return minTarget
 
+def getClusterCost(G,c):
+	inp = set([i[1] for i in G.out_edges(nbunch=c)])
+	tmp = G.out_edges(nbunch=list(inp), data=True )
+	totalCost = 0
+	checknode = []
+	for i in tmp:
+		if i[0] not in checknode:
+			minCost = 999999
+			for j in tmp:
+				if i[0] == j[0] and j[2]['weight'] < minCost:
+					minCost = j[2]['weight']
+			
+			totalCost += minCost
+			checknode.append(i[0])
+	return totalCost
+
 def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput,results={}):
 	listOfMetrics = [x for x in MGM.nodes if 'M' in x and MGM.out_degree(x) > 0]
 	listOfSources = [x for x in MGM.nodes if 'S' in x]
@@ -202,7 +220,7 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput,results={}):
 
 	listOfMinCostSources		=	[ getMinimumCostEdge(listOfWeightEdgeAttr,inputCov) for inputCov in listOfCovInput if getMinimumCostEdge(listOfWeightEdgeAttr,inputCov) is not None]
 	
-	totalCost					=	sum([ getSumMinimumCostEdge(listOfWeightEdgeAttr,inputCov) for inputCov in listOfCovInput if getSumMinimumCostEdge(listOfWeightEdgeAttr,inputCov) is not None])
+	totalCost					=	getClusterCost(MGM,listOfCovCluster)
 	
 	computationNodes	=	nx.get_node_attributes(subMGM, "computation")
 	sumComp				=	sum([int(computationNodes[minSource]) for minSource in listOfMinCostSources])
@@ -321,6 +339,53 @@ def maxSetCovByATTR(MGM,outputFile,valMax,attr,pos,config):
 
 	subGraph	=	MGM.subgraph(listOfCovMetrics+listOfCovCluster+listOfCovInputs+listOfCovSources)
 	return MGMminSetCover(subGraph,outputFile,pos,config)
+
+
+
+def getCombSum(G,clusters,target):
+	#pay attention of
+	print('combinooo')
+	result = []
+	
+	o = [3,4,5,7,9,11,13,15,17,19,21,23,24]
+
+	for i in o:
+		c=0
+		for seq in itertools.combinations(clusters, i):
+			seq = list(seq)
+			tot = getClusterCost(G,seq)
+			c+=1
+			
+			if tot == target:
+				result.append(seq)
+			if c > 12000:
+				print(i)
+				break
+
+	return result
+
+def maxSetCovByATTRv2(G,cost,outputFile,pos,config):
+	cl = [x for x in G.nodes if 'C' in x]
+	combNumb = getCombSum(G,cl,cost)
+	maxMetrics = 0
+	maxSeq = []
+	for seq in combNumb:
+		totmetrics = len(set([m[0] for m in G.in_edges(nbunch=seq)]))
+		print(totmetrics)
+		if totmetrics > maxMetrics:
+			maxMetrics = totmetrics
+			maxSeq = seq
+	
+	print(maxMetrics)
+	print(maxSeq)
+	if maxMetrics != 0:
+		g_c = G.copy()
+		for n in G.nodes:
+			if 'C' in n and n not in maxSeq:
+				g_c.remove_node(n)
+		G = g_c	
+	return MGMminSetCover(G,outputFile,pos,config)
+
 	
 def minCapacitySetCover(MGM, outputFile,pos,config):
 	listOfSources		=	[x for x in MGM.nodes if 'S' in x]

@@ -2,11 +2,11 @@ from app.api import MGM
 
 mgm = MGM('test/config.ini')
 
-mgm.minSetCover(mgm.G_c)
+#mgm.minSetCover(mgm.G_c)
 
 ########################################################################################
 #T451 - Take a subSet of Metric and run the min-set-cover-metric
-metrics = [node for node in mgm.G_c.nodes() if 'M' in node and random.random() > 0.65]
+#metrics = [node for node in mgm.G_c.nodes() if 'M' in node and random.random() > 0.65]
 #mgm.minSetCoverByMetric(mgm.G_c, metrics)
 
 
@@ -19,7 +19,7 @@ category	=	['Vulnerability Metrics','Situation Metrics']
 #######################################################################################
 #T453 - Take a subSet of INPUTS (or 1 INPUT) - what are all the metrics which I can cover?
 
-inputs	=	[node for node in mgm.G_c.nodes() if 'I' in node and random.random() > 0.65]
+#inputs	=	[node for node in mgm.G_c.nodes() if 'I' in node and random.random() > 0.65]
 #mgm.minSetCoverByInput(mgm.G_c, inputs)
 
 
@@ -37,4 +37,6 @@ maximumCost =   15
 #######################################################################################
 #T456 - What is the minimum computational capacity to cover a list of metrics?
 
-mgm.minCapacitySetCover(mgm.G_c)
+#mgm.minCapacitySetCover(mgm.G_c)
+
+#mgm.maxSetCovByAttributeOnEdgev2(mgm.G_c,15)
