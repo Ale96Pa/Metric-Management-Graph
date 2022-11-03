@@ -389,7 +389,6 @@ def maxSetCovByATTRv2(G,cost,outputFile,pos,config):
 	return MGMminSetCover(G,outputFile,pos,config)
 
 def maxSetCovByATTRv3(G,cost,outputFile,pos,config):
-	#1 get cluster with MIN COST and MAX numb of METRICS and the cost is < targetCost
 	targetCost = cost
 	setOfCluster = []
 	g_c = G.copy()
