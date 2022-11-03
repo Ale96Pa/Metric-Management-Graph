@@ -147,7 +147,9 @@
 	        stroke: #333;
 	        stroke-width: .5px;
         }
-
+        .PiYG,.PRGn,.PuOr,.RdBu,.RdGy,.RdYlBu,.RdYlGn,.Spectral{
+            display: none !important;
+        }
 	</style>
 
     <script src="{{ url_for('static',filename='js/cytoscape.min-3.22.1.js') }}"></script>
@@ -266,11 +268,12 @@
                             
                         </div>
                         <div id="scheme" class="section">
-                            <p><b><br>Pick a color scheme for category metrics:</b><br>1.Defense Metrics<br>2.Attack Metrics<br>4.Situation Metrics<br>5.Vulnerability Metrics<br></p>
+                            <p><b><br>Legend:</b><br>1.Defense Metrics<br>2.Attack Metrics<br>3.Situation Metrics<br>4.Vulnerability Metrics<br></p>
                             <div id="scheme1" style="width: 100%;">
                                 <label id="multi" style="display: none;"></label>
                                 <div id="ramps">
-                                    <div class="ramp BrBG selected"><svg width="15" height="75"><rect fill="rgb(166,97,26)" width="15" height="15" y="0"></rect><rect fill="rgb(223,194,125)" width="15" height="15" y="15"></rect><rect fill="rgb(245,245,245)" width="15" height="15" y="30"></rect><rect fill="rgb(128,205,193)" width="15" height="15" y="45"></rect><rect fill="rgb(1,133,113)" width="15" height="15" y="60"></rect></svg></div>
+                                    <div class="ramp BrBG selected"><svg width="15" height="75"><rect fill="rgb(166,97,26)" width="15" height="15" y="0"></rect><rect fill="rgb(223,194,125)" width="15" height="15" y="15"></rect><rect fill="rgb(128,205,193)" width="15" height="15" y="30"></rect><rect fill="rgb(1,133,113)" width="15" height="15" y="45"></rect></svg></div>
+                                    
                                     <div class="ramp PiYG"><svg width="15" height="75"><rect fill="rgb(208,28,139)" width="15" height="15" y="0"></rect><rect fill="rgb(241,182,218)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(184,225,134)" width="15" height="15" y="45"></rect><rect fill="rgb(77,172,38)" width="15" height="15" y="60"></rect></svg></div>
                                     <div class="ramp PRGn"><svg width="15" height="75"><rect fill="rgb(123,50,148)" width="15" height="15" y="0"></rect><rect fill="rgb(194,165,207)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(166,219,160)" width="15" height="15" y="45"></rect><rect fill="rgb(0,136,55)" width="15" height="15" y="60"></rect></svg></div>
                                     <div class="ramp PuOr"><svg width="15" height="75"><rect fill="rgb(230,97,1)" width="15" height="15" y="0"></rect><rect fill="rgb(253,184,99)" width="15" height="15" y="15"></rect><rect fill="rgb(247,247,247)" width="15" height="15" y="30"></rect><rect fill="rgb(178,171,210)" width="15" height="15" y="45"></rect><rect fill="rgb(94,60,153)" width="15" height="15" y="60"></rect></svg></div>

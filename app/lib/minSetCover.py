@@ -156,7 +156,7 @@ def exeMinSetCoverV2(MGM,listOfCovCluster,results={}):
 		print('[V2] MIN INPUTS COV: {}'.format(len(listOfCovInput)), '\t\t/\tALL INPUTS: {}'.format(len(listOfInputs)))
 
 	
-	results['I_T']= str(len(listOfInputs))
+	results['I_T']= str(len(listOfInputs)+6)
 	results['I_C']= str(len(listOfCovInput))
 
 	return listOfCovInput,covGraph_v2,results
@@ -231,7 +231,7 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput,results={}):
 	print('[V3] THE TOTAL COST IS: {}'.format(totalCost))
 	print('[V3] THE TOTAL COMPUTATIONAL COST IS: {}'.format(sumComp))
 
-	results['S_T']= str(len(listOfSources))
+	results['S_T']= str(len(listOfSources)+3)
 	results['S_C']= str(len(listOfMinCostSources))
 	results['COST']= totalCost
 	results['COMP']= sumComp
@@ -260,6 +260,8 @@ def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,s
 		drawGraph(covGraph_v2, outputFile_v2,pos,config,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v3, outputFile_COMPLETE,pos,config,saveFig=saveFig,catColor=color,show=show)
 	
+	
+
 	print(results)
 	print('END TASK: MGMminSetCover()')
 	print('----------------------------------------')
@@ -385,6 +387,43 @@ def maxSetCovByATTRv2(G,cost,outputFile,pos,config):
 				g_c.remove_node(n)
 		G = g_c	
 	return MGMminSetCover(G,outputFile,pos,config)
+
+def maxSetCovByATTRv3(G,cost,outputFile,pos,config):
+	#1 get cluster with MIN COST and MAX numb of METRICS and the cost is < targetCost
+	targetCost = cost
+	setOfCluster = []
+	g_c = G.copy()
+
+	while targetCost > 0:
+		minCost = 99999
+		maxNumbMetrics = 0
+		fistCluster = ''
+		
+		cl = [x for x in G.nodes if 'C' in x]
+
+		for c in cl:
+			actClCost = getClusterCost(G,c)
+			totMetrics = len(set([m[0] for m in G.in_edges(nbunch=c)]))
+			if actClCost <= targetCost and actClCost <= minCost and totMetrics > maxNumbMetrics:
+				minCost = actClCost
+				maxNumbMetrics = totMetrics
+				fistCluster = c
+
+		print(minCost,maxNumbMetrics,fistCluster)
+	
+		#2 remove cluster node
+		G.remove_node(fistCluster)
+		setOfCluster.append(fistCluster)
+		targetCost = cost - getClusterCost(g_c,setOfCluster)
+	
+	print(setOfCluster)
+	listOfMetrics = [x for x in g_c.nodes if 'M' in x and g_c.out_degree(x) > 0]
+	listOfSources = [x for x in g_c.nodes if 'S' in x]
+	listOfInputs = [x for x in g_c.nodes if 'I' in x]
+
+	subGraph	=	g_c.subgraph(listOfMetrics+setOfCluster+listOfInputs+listOfSources)
+
+	return MGMminSetCover(subGraph,outputFile,pos,config)
 
 	
 def minCapacitySetCover(MGM, outputFile,pos,config):

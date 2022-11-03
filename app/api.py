@@ -20,6 +20,7 @@ from app.lib.minSetCover import minSetCovBySOURCE
 from app.lib.minSetCover import maxSetCovByATTR
 from app.lib.minSetCover import maxSetCovByATTRv2
 from app.lib.minSetCover import minCapacitySetCover
+from app.lib.minSetCover import maxSetCovByATTRv3
 
 
 class MGM():
@@ -182,7 +183,7 @@ class MGM():
 		try:
 			output = self.outputPath+self.projectName+'-fixedCostAllMetrics-'+output+'.pdf'
 			
-			return maxSetCovByATTRv2(G,maxValue,output,self.postionOfNodes,self.config)
+			return maxSetCovByATTRv3(G,maxValue,output,self.postionOfNodes,self.config)
 		except Exception as e:
 			print(e)
 			return 'error'
