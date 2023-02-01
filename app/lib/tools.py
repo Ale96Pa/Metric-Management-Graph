@@ -4,21 +4,22 @@ import random
 
 def genPosNodes(G,delta,pos):
 	print('Start the positioning of nodes according to AS algo')
+	#1/03/2023 ho cambiato la sequenza del for che prima era I S CL ad CL I S
 	d = {}
 	find = 0
 	i=1
 	for el in G.nodes:
-		if 'I' in el and find == 0:
+		if 'CL' in el and find == 0:
 			find = 1
 			i=1
 			delta.pop(0)
 			pos.pop(0)
-		if 'S' in el and find == 1:
+		if 'I' in el and find == 1:
 			find = 2
 			i=1
 			delta.pop(0)
 			pos.pop(0)
-		if 'CL' in el and find == 2:
+		if 'S' in el and find == 2:
 			find = 3
 			i=1
 			delta.pop(0)

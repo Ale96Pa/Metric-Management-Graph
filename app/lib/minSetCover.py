@@ -253,9 +253,16 @@ def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,s
 	outputFile_v2	=	outputFile.split('.')[0]+"_v2."+outputFile.split('.')[1]
 	listOfCovInput,covGraph_v2,results    =   exeMinSetCoverV2(MGM,listOfCovCluster,results)
 	
+	
+
 
 	outputFile_COMPLETE	=	outputFile.split('.')[0]+"_COVERED."+outputFile.split('.')[1]
-	listOfMinCostSources,covGraph_v3,results	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,results)
+	
+	# listOfMinCostSources,covGraph_v3,results	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,results)
+	listOfMetrics = [x for x in MGM.nodes if 'M' in x and MGM.out_degree(x) > 0]
+	listOfSources = [x for x in MGM.nodes if 'S' in x]
+	covGraph_v3 = MGM.subgraph(listOfMetrics+listOfCovCluster+listOfCovInput+listOfSources)
+	
 
 	# get the end time
 	et = time.time()
@@ -273,9 +280,6 @@ def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,s
 		drawGraph(covGraph_v1, outputFile_v1,pos,config,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v2, outputFile_v2,pos,config,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v3, outputFile_COMPLETE,pos,config,saveFig=saveFig,catColor=color,show=show)
-	
-	
-
 	
 
 	print('END TASK: MGMminSetCover()')

@@ -35,8 +35,10 @@ def drawGraph(G,outputFileName,pos,config,catColor=False,saveFig=True,show=False
 	nx.draw_networkx(G, pos, **options)
 	
 	#Draw weight
-	labels = nx.get_edge_attributes(G,'weight')
-	nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+	#da decommentare quando non testi sui grafi random
+
+	#labels = nx.get_edge_attributes(G,'weight')
+	#nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
 
 	
 	
@@ -46,8 +48,9 @@ def drawGraph(G,outputFileName,pos,config,catColor=False,saveFig=True,show=False
 		if 'S' in node:
 			pos_attrs[node] = (coords[0]+ 1, coords[1])
 
-	node_labels = nx.get_node_attributes(G,'computation')
-	nx.draw_networkx_labels(G, pos_attrs, labels = node_labels, font_color='brown')
+	#da decommentare quando non testi sui grafi random
+	#node_labels = nx.get_node_attributes(G,'computation')
+	#nx.draw_networkx_labels(G, pos_attrs, labels = node_labels, font_color='brown')
 
 
 
@@ -60,13 +63,14 @@ def drawGraph(G,outputFileName,pos,config,catColor=False,saveFig=True,show=False
 				if category == dictNodeCat[node]:
 					index	=	categories.index(category)
 					coloredNode[index].append(node)
-		
-		nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[0], node_color="tab:blue")
-		nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[1], node_color="tab:red")
-		nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[2], node_color="tab:green")
-		nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[3], node_color="tab:gray")
+					
+		#da decommentare quando non testi sui grafi random
+		#nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[0], node_color="tab:blue")
+		#nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[1], node_color="tab:red")
+		#nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[2], node_color="tab:green")
+		#nx.draw_networkx_nodes(G, pos, nodelist=coloredNode[3], node_color="tab:gray")
 		labels = {n: n for n in G if 'M' in n}
-		nx.draw_networkx_labels(G, pos, labels,font_color="white",font_size=fontSize)
+		#nx.draw_networkx_labels(G, pos, labels,font_color="white",font_size=fontSize)
 
 
 
