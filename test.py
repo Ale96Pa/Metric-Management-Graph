@@ -2,7 +2,15 @@ from app.api import MGM
 
 mgm = MGM('test/config.ini')
 
-#mgm.minSetCover(mgm.G_c)
+mgm.minSetCover(mgm.G_c)
+
+
+
+
+
+
+
+
 
 ########################################################################################
 #T451 - Take a subSet of Metric and run the min-set-cover-metric

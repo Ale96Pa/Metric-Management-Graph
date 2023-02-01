@@ -1,6 +1,7 @@
 import networkx as nx
 import csv
 import itertools
+import time
 
 
 from app.lib.draw import drawGraph
@@ -240,6 +241,8 @@ def exeMinSetCoverV3(MGM, listOfCovCluster, listOfCovInput,results={}):
 	
 def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,show=False):
 	print('START TASK: MGMminSetCover()')
+	st = time.time()
+	
 	results = {}
 	outputFile_BASE	=	outputFile.split('.')[0]+"_START."+outputFile.split('.')[1]
 
@@ -254,6 +257,17 @@ def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,s
 	outputFile_COMPLETE	=	outputFile.split('.')[0]+"_COVERED."+outputFile.split('.')[1]
 	listOfMinCostSources,covGraph_v3,results	=	exeMinSetCoverV3(MGM,listOfCovCluster,listOfCovInput,results)
 
+	# get the end time
+	et = time.time()
+
+	# get the execution time
+	elapsed_time = et - st
+	print('Execution time:', elapsed_time, 'seconds')
+	print(results)
+
+
+	print('DRAWING THE GRAPS...')
+
 	if draw:
 		drawGraph(MGM, outputFile_BASE,pos,config,saveFig=saveFig,catColor=color,show=show)
 		drawGraph(covGraph_v1, outputFile_v1,pos,config,saveFig=saveFig,catColor=color,show=show)
@@ -262,7 +276,8 @@ def MGMminSetCover(MGM,outputFile,pos,config,draw=True,saveFig=True,color=True,s
 	
 	
 
-	print(results)
+	
+
 	print('END TASK: MGMminSetCover()')
 	print('----------------------------------------')
 	return results
