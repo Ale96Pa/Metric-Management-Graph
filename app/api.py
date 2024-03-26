@@ -2,6 +2,7 @@ import configparser
 import time
 import os
 import networkx as nx
+import pickle
 
 from app.lib.convertXlsToCSV import convertXlsToCSV
 
@@ -38,7 +39,8 @@ class MGM():
 
 			if os.path.isfile(self.pikle) and state==0:
 				print('EXIST PIKLE')
-				self.G_c = nx.read_gpickle(self.pikle)
+				with open(self.pikle, 'rb') as f:
+					self.G_c = pickle.load(f)
 
 				self.delta			=	[int(x) for x in self.config['GRAPH']['delta'].split(',')]
 				self.position		=	[int(x) for x in self.config['GRAPH']['position'].split(',')]
