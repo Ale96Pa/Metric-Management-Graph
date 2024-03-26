@@ -14,7 +14,7 @@ Before you can run the project, make sure you have Python installed on your syst
 
 ### Installing Dependencies
 
-1. Clone the repository to your local machine: git clone [me/mgm-project.git](https://github.com/andreasorrentino/Metric-Management-Graph)
+1. Clone the repository to your local machine: git clone [https://github.com/andreasorrentino/Metric-Management-Graph](https://github.com/andreasorrentino/Metric-Management-Graph)
 2. Navigate to the project directory: cd Metric-Management-Graph
 3. Install the required Python dependencies: pip install -r requirements.txt
 
