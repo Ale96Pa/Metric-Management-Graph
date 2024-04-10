@@ -1,4 +1,8 @@
-# MGM (Metric Graph Model) Project
+# How to Assess Measurement Capabilities of a Security Monitoring Infrastructure and Plan Investment through a Graph-based Approach
+
+## Abstract
+
+Security monitoring is one of the most critical activities while managing cyber security for every organization, as it is one of the first in different security processes and systems (e.g., risk identification and threat detection). To correctly monitor the current situation and support the decision-making process, companies need to collect heterogeneous data and compute security metrics that provide a quantitative evaluation. In this paper, we address the problem of supporting security experts in managing security metrics efficiently and effectively by considering the trade-off cost-benefit between the usage of a particular monitoring tool and the benefit of including it in the monitoring infrastructure. To this aim, we introduce the concept of Metric Graph Model (MGM) and we leverage it to solve a set of identified security monitoring problems. We prove the NP hardness of some of these problems and in such cases, we propose heuristics for solving them based on the MGM. We provide a performance evaluation of the proposed heuristics through synthetic MGMs and finally, we present a usage scenario based on an instance of the MGM derived from a state-of-the-art security metric taxono
 
 ## Introduction
 
