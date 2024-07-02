@@ -29,9 +29,5 @@ This will start the web application on your local machine. You can access it by 
 
 Contributions to the MGM project are welcome. If you wish to contribute, please fork the repository and submit a pull request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 
 
